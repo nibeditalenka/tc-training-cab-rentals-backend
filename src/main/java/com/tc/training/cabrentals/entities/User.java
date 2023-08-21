@@ -11,5 +11,6 @@ public class User extends BaseEntity {
     private String password;
     private String confirmPassword;
     private Long phoneNum;
+    private String firebaseId;
 
 }
