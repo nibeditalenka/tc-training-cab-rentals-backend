@@ -1,17 +1,17 @@
 package com.tc.training.cabrentals.facade;
 
-import com.tc.training.cabrentals.dto.CenterInput;
-import com.tc.training.cabrentals.entities.Center;
-
 import java.util.List;
 import java.util.UUID;
 
+import com.tc.training.cabrentals.dto.CenterInput;
+import com.tc.training.cabrentals.dto.CenterOutput;
+import com.tc.training.cabrentals.entities.Center;
+
 public interface CenterFacade {
-    void add(CenterInput centerInput);
+  CenterOutput add( CenterInput centerInput );
 
-    void delete(UUID id);
+  void delete( UUID id );
 
-    List<Center> getAll();
-
+  List<Center> getAll();
 
 }

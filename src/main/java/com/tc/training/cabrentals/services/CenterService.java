@@ -1,20 +1,19 @@
 package com.tc.training.cabrentals.services;
 
-import com.tc.training.cabrentals.entities.Center;
-
 import java.util.List;
 import java.util.UUID;
 
+import com.tc.training.cabrentals.entities.Center;
 
 public interface CenterService {
-    public Center add(Center center);
+  Center add( Center center );
 
-    public Center centerById(UUID id);
+  Center centerById( UUID id );
 
-    public void deleteCenter(Center center);
+  void deleteCenter( Center center );
 
-    void deleteById(UUID id);
+  void deleteById( UUID id );
 
-    List<Center> getAll();
+  List<Center> getAll();
 
 }
