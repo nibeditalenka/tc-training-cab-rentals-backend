@@ -1,6 +1,6 @@
 package com.tc.training.cabrentals.entities;
 
-import com.tc.training.cabrentals.enums.Status;
+import com.tc.training.cabrentals.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class Order extends BaseEntity {
     private LocalDateTime pickUpDate;
     private LocalDateTime returnDate;
-    private Status status;
+    private OrderStatus orderStatus;
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
     @OneToMany(mappedBy = "order")
