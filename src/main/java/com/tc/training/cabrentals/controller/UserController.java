@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tc.training.cabrentals.dto.SignupInput;
+import com.tc.training.cabrentals.dto.LoginInput;
 import com.tc.training.cabrentals.dto.UserInput;
 import com.tc.training.cabrentals.dto.UserOutput;
 import com.tc.training.cabrentals.facade.UserFacade;
@@ -46,7 +46,12 @@ public class UserController {
   }
 
   @PostMapping( "/end-user" )
-  public UserOutput create( @RequestBody SignupInput input ) {
-    return userFacade.add( input );
+  public UserOutput signup( @RequestBody UserInput input ) {
+    return userFacade.doSignup( input );
+  }
+
+  @PostMapping( "/login" )
+  public UserOutput login( @RequestBody LoginInput input ) {
+    return userFacade.doLogin( input );
   }
 }

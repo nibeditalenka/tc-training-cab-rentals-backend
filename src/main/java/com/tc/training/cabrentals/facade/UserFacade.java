@@ -3,7 +3,7 @@ package com.tc.training.cabrentals.facade;
 import java.util.List;
 import java.util.UUID;
 
-import com.tc.training.cabrentals.dto.SignupInput;
+import com.tc.training.cabrentals.dto.LoginInput;
 import com.tc.training.cabrentals.dto.UserInput;
 import com.tc.training.cabrentals.dto.UserOutput;
 
@@ -16,5 +16,7 @@ public interface UserFacade {
 
   void deleteEmployeeById( UUID id );
 
-  UserOutput add( SignupInput input );
+  UserOutput doSignup( UserInput input );
+
+  UserOutput doLogin( LoginInput input );
 }

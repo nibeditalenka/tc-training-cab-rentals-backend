@@ -3,9 +3,7 @@ package com.tc.training.cabrentals.dto;
 import lombok.Data;
 
 @Data
-public class UserInput {
-  private String name;
+public class LoginInput {
   private String email;
-  private String phoneNumber;
   private String password;
 }

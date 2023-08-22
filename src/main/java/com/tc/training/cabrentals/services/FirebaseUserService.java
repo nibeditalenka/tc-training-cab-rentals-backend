@@ -6,4 +6,5 @@ import com.tc.training.cabrentals.dto.UserInput;
 public interface FirebaseUserService {
   UserRecord createUser( UserInput input );
 
+  String getVerificationLink( String email );
 }

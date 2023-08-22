@@ -5,9 +5,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.tc.training.cabrentals.entities.User;
+import com.tc.training.cabrentals.enums.Role;
 
 public interface UserService {
-  User create( User user );
+  User createOrUpdate( User user );
 
   List<User> getAll();
 
@@ -16,4 +17,6 @@ public interface UserService {
   void deleteById( UUID id );
 
   User add( User user );
+
+  Boolean userExistsByRole( Role role );
 }
