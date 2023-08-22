@@ -29,7 +29,7 @@ public class StartupRunner implements ApplicationRunner {
       user.setName( "Admin" );
       user.setRole( Role.ADMIN );
       user.setEmail( "admin@cr.com" );
-      user.setPhoneNum( "" );
+      user.setPhoneNum( "+5389234552" );
       UserInput userInput = new UserInput();
       userInput.setEmail( user.getEmail() );
       userInput.setName( user.getName() );
