@@ -8,7 +8,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode( callSuper = true )
 @Data
 @Entity
 @Table( name = "centers" )
@@ -18,5 +20,5 @@ public class Center extends BaseEntity {
   private Address address;
   @OneToMany
   private List<Car> cars;
-  private Integer carCount;
+  private Boolean isActive = Boolean.TRUE;
 }

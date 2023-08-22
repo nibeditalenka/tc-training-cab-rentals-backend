@@ -17,22 +17,12 @@ public class CenterServiceImpl implements CenterService {
   private final CenterRepository centerRepository;
 
   @Override
-  public Center add( Center center ) {
+  public Center createOrUpdate( Center center ) {
     return centerRepository.save( center );
   }
 
-  public Center centerById( UUID id ) {
+  public Center getById( UUID id ) {
     return centerRepository.findById( id ).orElse( ( null ) );
-  }
-
-  @Override
-  public void deleteCenter( Center center ) {
-    centerRepository.delete( center );
-  }
-
-  @Override
-  public void deleteById( UUID id ) {
-    centerRepository.deleteById( id );
   }
 
   @Override
