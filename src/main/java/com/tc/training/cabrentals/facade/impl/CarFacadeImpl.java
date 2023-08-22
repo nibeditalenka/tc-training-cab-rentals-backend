@@ -23,7 +23,7 @@ public class CarFacadeImpl implements CarFacade {
   @Override
   public CarOutput addCar( CarInput carInput ) {
     Car car = modelMapper.map( carInput, Car.class );
-    final Center center = centerService.centerById( carInput.getCenterId() );
+    final Center center = centerService.getById( carInput.getCenterId() );
     car.setCenter( center );
     car.setTripCount( 0 );
     car = carService.add( car );

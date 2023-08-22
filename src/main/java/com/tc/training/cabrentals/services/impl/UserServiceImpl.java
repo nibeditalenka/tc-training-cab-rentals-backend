@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.tc.training.cabrentals.entities.User;
 import com.tc.training.cabrentals.enums.Role;
@@ -19,7 +20,7 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
 
   @Override
-  public User create( User user ) {
+  public User createOrUpdate( User user ) {
     return userRepository.save( user );
   }
 
@@ -41,5 +42,10 @@ public class UserServiceImpl implements UserService {
   @Override
   public User add( final User user ) {
     return userRepository.save( user );
+  }
+
+  @Override
+  public Boolean userExistsByRole( final Role role ) {
+    return !CollectionUtils.isEmpty( userRepository.findByRole( role ) );
   }
 }

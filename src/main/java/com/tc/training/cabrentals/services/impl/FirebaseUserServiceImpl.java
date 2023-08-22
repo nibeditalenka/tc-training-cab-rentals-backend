@@ -2,10 +2,8 @@ package com.tc.training.cabrentals.services.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.google.firebase.auth.ExportedUserRecord;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.ListUsersPage;
 import com.google.firebase.auth.UserRecord;
 import com.tc.training.cabrentals.dto.UserInput;
 import com.tc.training.cabrentals.services.FirebaseUserService;
@@ -17,7 +15,7 @@ public class FirebaseUserServiceImpl implements FirebaseUserService {
   @Override
   public UserRecord createUser( UserInput input ) {
     UserRecord.CreateRequest createRequest = new UserRecord.CreateRequest();
-    createRequest.setPhoneNumber( input.getPhoneNum() );
+    createRequest.setPhoneNumber( input.getPhoneNumber() );
     createRequest.setPassword( input.getPassword() );
     createRequest.setDisplayName( input.getName() );
     createRequest.setEmail( input.getEmail() );
@@ -25,16 +23,6 @@ public class FirebaseUserServiceImpl implements FirebaseUserService {
 
     try {
       return firebaseAuth.createUser( createRequest );
-    } catch( FirebaseAuthException e ) {
-      throw new RuntimeException( e );
-    }
-  }
-
-  @Override
-  public Iterable<ExportedUserRecord> getAll() {
-    try {
-      ListUsersPage listUsers = FirebaseAuth.getInstance().listUsers( null );
-      return listUsers.getValues();
     } catch( FirebaseAuthException e ) {
       throw new RuntimeException( e );
     }
