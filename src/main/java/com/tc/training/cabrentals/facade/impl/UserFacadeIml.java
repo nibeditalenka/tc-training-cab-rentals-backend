@@ -6,6 +6,8 @@ import java.util.UUID;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import com.google.firebase.auth.UserRecord;
+import com.tc.training.cabrentals.dto.SignupInput;
 import com.tc.training.cabrentals.dto.UserInput;
 import com.tc.training.cabrentals.dto.UserOutput;
 import com.tc.training.cabrentals.entities.User;
@@ -27,8 +29,8 @@ public class UserFacadeIml implements UserFacade {
   public UserOutput createEmployee( UserInput input ) {
     User map = modelMapper.map( input, User.class );
     map.setRole( Role.EMPLOYEE );
-    String firebaseUserId = firebaseUserService.createUser( input );
-    map.setFirebaseId( firebaseUserId );
+    UserRecord firebaseUser = firebaseUserService.createUser( input );
+    map.setFirebaseId( firebaseUser.getUid() );
     User user = userService.create( map );
     UserOutput output = modelMapper.map( user, UserOutput.class );
     return output;
@@ -51,6 +53,14 @@ public class UserFacadeIml implements UserFacade {
   @Override
   public void deleteEmployeeById( UUID id ) {
     userService.deleteById( id );
+  }
+
+  @Override
+  public UserOutput add( SignupInput input ) {
+    User user = modelMapper.map( input, User.class );
+    User add = userService.add( user );
+    UserOutput output = modelMapper.map( add, UserOutput.class );
+    return output;
   }
 
 }

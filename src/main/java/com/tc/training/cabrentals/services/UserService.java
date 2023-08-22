@@ -14,4 +14,6 @@ public interface UserService {
   Optional<User> getById( UUID id );
 
   void deleteById( UUID id );
+
+  User add( User user );
 }
