@@ -7,7 +7,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import com.google.firebase.auth.UserRecord;
-import com.tc.training.cabrentals.dto.SignupInput;
 import com.tc.training.cabrentals.dto.UserInput;
 import com.tc.training.cabrentals.dto.UserOutput;
 import com.tc.training.cabrentals.entities.User;
@@ -46,8 +45,7 @@ public class UserFacadeIml implements UserFacade {
   @Override
   public UserOutput getEmployeeById( UUID id ) {
     User user = userService.getById( id ).orElseThrow( () -> new RuntimeException( "User not found with this id" ) );
-    UserOutput userOutput = modelMapper.map( user, UserOutput.class );
-    return userOutput;
+    return modelMapper.map( user, UserOutput.class );
   }
 
   @Override
@@ -56,11 +54,14 @@ public class UserFacadeIml implements UserFacade {
   }
 
   @Override
-  public UserOutput add( SignupInput input ) {
+  public UserOutput doSignup( UserInput input ) {
     User user = modelMapper.map( input, User.class );
+    UserRecord userRecord = firebaseUserService.createUser( input );
+    user.setFirebaseId( userRecord.getUid() );
+    user.setRole( Role.END_USER );
     User add = userService.add( user );
-    UserOutput output = modelMapper.map( add, UserOutput.class );
-    return output;
+    firebaseUserService.getVerificationLink( add.getEmail() );
+    return modelMapper.map( add, UserOutput.class );
   }
 
 }
