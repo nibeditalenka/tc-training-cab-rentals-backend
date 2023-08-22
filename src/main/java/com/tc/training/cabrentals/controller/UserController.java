@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tc.training.cabrentals.dto.SignupInput;
 import com.tc.training.cabrentals.dto.UserInput;
 import com.tc.training.cabrentals.dto.UserOutput;
 import com.tc.training.cabrentals.facade.UserFacade;
@@ -42,5 +43,10 @@ public class UserController {
   @DeleteMapping
   public void deleteEmployeeById( @RequestParam UUID id ) {
     userFacade.deleteEmployeeById( id );
+  }
+
+  @PostMapping( "/end-user" )
+  public UserOutput create( @RequestBody SignupInput input ) {
+    return userFacade.add( input );
   }
 }

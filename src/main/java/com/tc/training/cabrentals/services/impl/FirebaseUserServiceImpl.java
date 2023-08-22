@@ -12,7 +12,7 @@ import com.tc.training.cabrentals.services.FirebaseUserService;
 public class FirebaseUserServiceImpl implements FirebaseUserService {
 
   @Override
-  public String createUser( UserInput input ) {
+  public UserRecord createUser( UserInput input ) {
     UserRecord.CreateRequest createRequest = new UserRecord.CreateRequest();
     createRequest.setPhoneNumber( input.getPhoneNum() );
     createRequest.setPassword( input.getPassword() );
@@ -23,9 +23,10 @@ public class FirebaseUserServiceImpl implements FirebaseUserService {
     try {
       UserRecord user = firebaseAuth.createUser( createRequest );
       String verificationLink = firebaseAuth.generateEmailVerificationLink( user.getEmail() );
-      return user.getUid();
+      return user;
     } catch( FirebaseAuthException e ) {
       throw new RuntimeException( e );
     }
   }
+
 }
