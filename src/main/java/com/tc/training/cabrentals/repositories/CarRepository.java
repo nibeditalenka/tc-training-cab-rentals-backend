@@ -9,4 +9,5 @@ import com.tc.training.cabrentals.entities.Car;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, UUID> {
+
 }
