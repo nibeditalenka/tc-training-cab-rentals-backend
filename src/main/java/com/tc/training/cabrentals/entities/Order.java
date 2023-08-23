@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.tc.training.cabrentals.enums.OrderStatus;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -19,8 +18,8 @@ public class Order extends BaseEntity {
   private LocalDateTime pickUpDate;
   private LocalDateTime returnDate;
   private OrderStatus orderStatus;
-  @ManyToOne( cascade = CascadeType.ALL )
+  @ManyToOne
   private User user;
-  @OneToMany( mappedBy = "order" )
+  @OneToMany
   private List<Car> car;
 }

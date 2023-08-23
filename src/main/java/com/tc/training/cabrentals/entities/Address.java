@@ -11,5 +11,4 @@ public class Address extends BaseEntity {
   private String landMark;
   private String pinCode;
   private String city;
-
 }

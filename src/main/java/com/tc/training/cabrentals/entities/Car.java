@@ -23,8 +23,9 @@ public class Car extends BaseEntity {
   private Float averageRatings;
   private String image;
   @ManyToOne
-  @JoinColumn( name = "order_id" ) // This assumes you have a column named "order_id" in the cars table
+  @JoinColumn( name = "order_id" )
   private Order order;
   @ManyToOne
   private Center center;
+
 }
