@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CarInput {
   private String type;
+  private String plateNumber;
   private String brand;
   private String name;
   private String seater;

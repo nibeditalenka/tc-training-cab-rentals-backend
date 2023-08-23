@@ -1,5 +1,7 @@
 package com.tc.training.cabrentals.entities;
 
+import com.tc.training.cabrentals.enums.CarStatus;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -8,6 +10,8 @@ import lombok.Data;
 @Data
 @Entity
 public class Car extends BaseEntity {
+  CarStatus carStatus;
+  private String plateNumber;
   private String type;
   private String brand;
   private String name;
