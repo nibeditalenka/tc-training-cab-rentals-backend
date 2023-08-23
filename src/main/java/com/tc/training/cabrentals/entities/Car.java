@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 @Entity
 public class Car extends BaseEntity {
-  CarStatus carStatus;
+  private CarStatus carStatus;
   private String plateNumber;
   private String type;
   private String brand;
