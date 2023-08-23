@@ -1,7 +1,5 @@
 package com.tc.training.cabrentals.facade.impl;
 
-import java.util.List;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -24,13 +22,5 @@ public class OrderFacadeImpl implements OrderFacade {
     Order order = modelMapper.map( input, Order.class );
     orderService.create( order );
     return modelMapper.map( order, OrderOutput.class );
-  }
-
-  @Override
-  public List<OrderOutput> getAll() {
-    List<Order> orders = orderService.getAll();
-    List<OrderOutput> orderOutputs = orders.stream().map( order -> modelMapper.map( order, OrderOutput.class ) )
-        .toList();
-    return orderOutputs;
   }
 }
