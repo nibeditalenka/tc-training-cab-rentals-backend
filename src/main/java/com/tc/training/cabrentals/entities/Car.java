@@ -1,10 +1,11 @@
 package com.tc.training.cabrentals.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import com.tc.training.cabrentals.enums.CarStatus;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data

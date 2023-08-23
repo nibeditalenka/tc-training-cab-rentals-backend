@@ -57,11 +57,11 @@ public class UserFacadeIml implements UserFacade {
   @Override
   public UserOutput doSignup( UserInput input ) {
     User user = modelMapper.map( input, User.class );
+    user.setRole( Role.END_USER );
     UserRecord userRecord = firebaseUserService.createUser( input );
     user.setFirebaseId( userRecord.getUid() );
-    user.setRole( Role.END_USER );
     User add = userService.add( user );
-    firebaseUserService.getVerificationLink( add.getEmail() );
+    String verificationLink = firebaseUserService.getVerificationLink( add.getEmail() );
     return modelMapper.map( add, UserOutput.class );
   }
 

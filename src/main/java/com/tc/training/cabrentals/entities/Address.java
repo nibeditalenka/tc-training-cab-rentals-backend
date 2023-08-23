@@ -1,6 +1,7 @@
 package com.tc.training.cabrentals.entities;
 
-import jakarta.persistence.Entity;
+import javax.persistence.Entity;
+
 import lombok.Data;
 
 @Data

@@ -45,7 +45,7 @@ public class UserController {
     userFacade.deleteEmployeeById( id );
   }
 
-  @PostMapping( "/end-user" )
+  @PostMapping( "/end-users" )
   public UserOutput signup( @RequestBody UserInput input ) {
     return userFacade.doSignup( input );
   }

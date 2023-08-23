@@ -6,6 +6,6 @@ import lombok.Data;
 public class UserInput {
   private String name;
   private String email;
-  private String phoneNumber;
+  private String phoneNum;
   private String password;
 }

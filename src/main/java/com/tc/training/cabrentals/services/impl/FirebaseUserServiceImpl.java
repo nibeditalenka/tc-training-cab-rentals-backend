@@ -14,7 +14,7 @@ public class FirebaseUserServiceImpl implements FirebaseUserService {
   @Override
   public UserRecord createUser( UserInput input ) {
     UserRecord.CreateRequest createRequest = new UserRecord.CreateRequest();
-    createRequest.setPhoneNumber( input.getPhoneNumber() );
+    createRequest.setPhoneNumber( input.getPhoneNum() );
     createRequest.setPassword( input.getPassword() );
     createRequest.setDisplayName( input.getName() );
     createRequest.setEmail( input.getEmail() );

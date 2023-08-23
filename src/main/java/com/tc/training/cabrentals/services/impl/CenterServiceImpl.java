@@ -27,6 +27,6 @@ public class CenterServiceImpl implements CenterService {
 
   @Override
   public List<Center> getAll() {
-    return centerRepository.findAll();
+    return (List<Center>) centerRepository.findAll();
   }
 }

@@ -1,5 +1,6 @@
 package com.tc.training.cabrentals.configurations;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 @Log4j2
 public class StartupRunner implements ApplicationRunner {
+  @Autowired
   private final UserService userService;
   private final FirebaseUserService firebaseUserService;
 
@@ -34,7 +36,7 @@ public class StartupRunner implements ApplicationRunner {
       userInput.setEmail( user.getEmail() );
       userInput.setName( user.getName() );
       userInput.setPassword( "password" );
-      userInput.setPhoneNumber( "+5478932425" );
+      userInput.setPhoneNum( "+5478932425" );
       UserRecord userRecord = firebaseUserService.createUser( userInput );
       user.setFirebaseId( userRecord.getUid() );
       user = userService.createOrUpdate( user );
