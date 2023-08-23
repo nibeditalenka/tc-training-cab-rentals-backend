@@ -9,7 +9,6 @@ import com.tc.training.cabrentals.dto.UserInput;
 import com.tc.training.cabrentals.services.FirebaseUserService;
 
 @Service
-
 public class FirebaseUserServiceImpl implements FirebaseUserService {
 
   @Override
