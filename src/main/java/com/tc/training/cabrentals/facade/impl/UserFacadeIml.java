@@ -1,6 +1,5 @@
 package com.tc.training.cabrentals.facade.impl;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -18,6 +17,7 @@ import com.tc.training.cabrentals.exception.ResourceNotFoundException;
 import com.tc.training.cabrentals.facade.UserFacade;
 import com.tc.training.cabrentals.services.FirebaseUserService;
 import com.tc.training.cabrentals.services.UserService;
+import com.tc.training.cabrentals.utils.AppUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,17 +41,7 @@ public class UserFacadeIml implements UserFacade {
   @Override
   public PageOutput<UserOutput> getAllEmployee( final Integer pageSize, final Integer pageNumber, final Role role ) {
     Page<User> users = userService.getAllByFilters( pageSize, pageNumber, role );
-    List<UserOutput> userOutputs = users.stream().map( user -> modelMapper.map( user, UserOutput.class ) ).toList();
-    PageOutput<UserOutput> pageOutput = new PageOutput<>();
-    pageOutput.setPageSize( users.getSize() );
-    pageOutput.setPageNumber( users.getNumber() );
-    pageOutput.setTotalPages( users.getTotalPages() );
-    pageOutput.setTotalElements( users.getTotalElements() );
-    pageOutput.setFirst( users.isFirst() );
-    pageOutput.setLast( users.isLast() );
-    pageOutput.setContent( userOutputs );
-
-    return pageOutput;
+    return AppUtils.convertPageToPageOutput( users, UserOutput.class );
   }
 
   @Override

@@ -1,6 +1,5 @@
 package com.tc.training.cabrentals.facade.impl;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -17,6 +16,7 @@ import com.tc.training.cabrentals.enums.CarStatus;
 import com.tc.training.cabrentals.facade.CarFacade;
 import com.tc.training.cabrentals.services.CarService;
 import com.tc.training.cabrentals.services.CenterService;
+import com.tc.training.cabrentals.utils.AppUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -49,7 +49,7 @@ public class CarFacadeImpl implements CarFacade {
   public CarOutput updateCar( UUID id, CarInput carInput ) {
     Car carUpdate = carService.getCarById( id );
     carUpdate = modelMapper.map( carInput, Car.class );
-    carService.createOrUpdate( carUpdate );
+    carUpdate = carService.createOrUpdate( carUpdate );
     return modelMapper.map( carUpdate, CarOutput.class );
   }
 
@@ -59,14 +59,6 @@ public class CarFacadeImpl implements CarFacade {
       Float minPrice, Float maxPrice, Boolean automatic, Integer tripCount, Float averageRatings ) {
     Page<Car> carPage = carService.getAllCars( pageNumber, pageSize, sortBy, sortDirection, query, type, model, seater,
         mileage, minPrice, maxPrice, automatic, tripCount, averageRatings );
-    PageOutput<CarOutput> output = new PageOutput<>();
-    final List<CarOutput> list = carPage.map( car -> modelMapper.map( car, CarOutput.class ) ).stream().toList();
-    output.setContent( list );
-    output.setPageSize( carPage.getSize() );
-    output.setFirst( carPage.isFirst() );
-    output.setLast( carPage.isLast() );
-    output.setTotalElements( carPage.getTotalElements() );
-    output.setTotalPages( carPage.getTotalPages() );
-    return output;
+    return AppUtils.convertPageToPageOutput( carPage, CarOutput.class );
   }
 }
