@@ -7,4 +7,6 @@ public interface FirebaseUserService {
   UserRecord createUser( UserInput input );
 
   String getVerificationLink( String email );
+
+  void deleteFirebaseUserByMail( String email );
 }
