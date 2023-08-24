@@ -8,7 +8,7 @@ import lombok.Data;
 public class CarOutput {
   private String type;
   private String brand;
-  private String name;
+  private String model;
   private String seater;
   private String mileage;
   private Float price;

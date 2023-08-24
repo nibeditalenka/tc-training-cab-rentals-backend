@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.tc.training.cabrentals.dto.CarInput;
 import com.tc.training.cabrentals.dto.CarOutput;
+import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.entities.Car;
 import com.tc.training.cabrentals.entities.Center;
 import com.tc.training.cabrentals.enums.CarStatus;
@@ -51,8 +54,19 @@ public class CarFacadeImpl implements CarFacade {
   }
 
   @Override
-  public List<Car> getAllCar() {
-    return carService.getAllCars();
+  public PageOutput<CarOutput> getAllCar( Integer pageNumber, Integer pageSize, String sortBy,
+      Sort.Direction sortDirection, String query, String type, String model, String seater, String mileage,
+      Float minPrice, Float maxPrice, Boolean automatic, Integer tripCount, Float averageRatings ) {
+    Page<Car> carPage = carService.getAllCars( pageNumber, pageSize, sortBy, sortDirection, query, type, model, seater,
+        mileage, minPrice, maxPrice, automatic, tripCount, averageRatings );
+    PageOutput<CarOutput> output = new PageOutput<>();
+    final List<CarOutput> list = carPage.map( car -> modelMapper.map( car, CarOutput.class ) ).stream().toList();
+    output.setContent( list );
+    output.setPageSize( carPage.getSize() );
+    output.setFirst( carPage.isFirst() );
+    output.setLast( carPage.isLast() );
+    output.setTotalElements( carPage.getTotalElements() );
+    output.setTotalPages( carPage.getTotalPages() );
+    return output;
   }
-
 }

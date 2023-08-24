@@ -1,11 +1,12 @@
 package com.tc.training.cabrentals.facade;
 
-import java.util.List;
 import java.util.UUID;
+
+import org.springframework.data.domain.Sort;
 
 import com.tc.training.cabrentals.dto.CarInput;
 import com.tc.training.cabrentals.dto.CarOutput;
-import com.tc.training.cabrentals.entities.Car;
+import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.enums.CarStatus;
 
 public interface CarFacade {
@@ -15,5 +16,8 @@ public interface CarFacade {
 
   CarOutput updateCar( UUID id, CarInput carInput );
 
-  List<Car> getAllCar();
+  PageOutput<CarOutput> getAllCar( Integer pageNumber, Integer pageSize, String sortBy, Sort.Direction sortDirection,
+      String query, String type, String model, String seater, String mileage, Float minPrice, Float maxPrice,
+      Boolean automatic, Integer tripCount, Float averageRatings );
+
 }

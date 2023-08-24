@@ -13,7 +13,7 @@ public class CarInput {
   private String type;
   private String plateNumber;
   private String brand;
-  private String name;
+  private String model;
   private String seater;
   private String mileage;
   private Float price;

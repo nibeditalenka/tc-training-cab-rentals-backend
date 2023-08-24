@@ -7,7 +7,9 @@ import javax.persistence.ManyToOne;
 import com.tc.training.cabrentals.enums.CarStatus;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode( callSuper = true )
 @Data
 @Entity
 public class Car extends BaseEntity {
@@ -15,7 +17,7 @@ public class Car extends BaseEntity {
   private String plateNumber;
   private String type;
   private String brand;
-  private String name;
+  private String model;
   private String seater;
   private String mileage;
   private Float price;
