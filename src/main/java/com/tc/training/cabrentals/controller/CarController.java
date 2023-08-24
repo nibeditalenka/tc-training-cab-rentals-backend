@@ -55,6 +55,5 @@ public class CarController {
       @RequestParam( required = false ) Integer tripCount, @RequestParam( required = false ) Float averageRatings ) {
     return carFacade.getAllCar( pageNumber, pageSize, sortBy, sortDirection, query, type, model, seater, mileage,
         minPrice, maxPrice, automatic, tripCount, averageRatings );
-    //return null;
   }
 }

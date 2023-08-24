@@ -1,20 +1,23 @@
 package com.tc.training.cabrentals.facade.impl;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import com.tc.training.cabrentals.dto.CenterInput;
 import com.tc.training.cabrentals.dto.CenterOutput;
 import com.tc.training.cabrentals.dto.CenterTransferDto;
+import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.entities.Address;
 import com.tc.training.cabrentals.entities.Center;
 import com.tc.training.cabrentals.facade.CenterFacade;
 import com.tc.training.cabrentals.services.CenterService;
+import com.tc.training.cabrentals.utils.AppUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -58,7 +61,11 @@ public class CenterFacadeImpl implements CenterFacade {
   }
 
   @Override
-  public List<Center> getAll() {
-    return centerService.getAll();
+  public PageOutput<CenterOutput> getAll( final Integer pageNumber, final Integer pageSize, final String sortBy,
+      final Sort.Direction sortDirection, final String name, final String city ) {
+
+    Page<Center> centerPage = centerService.getAll( pageNumber, pageSize, sortBy, sortDirection, name, city );
+    return AppUtils.convertPageToPageOutput( centerPage, CenterOutput.class );
   }
+
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class CarOutput {
+  private UUID id;
   private String type;
   private String brand;
   private String model;
