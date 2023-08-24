@@ -8,7 +8,10 @@ import com.google.firebase.auth.UserRecord;
 import com.tc.training.cabrentals.dto.UserInput;
 import com.tc.training.cabrentals.services.FirebaseUserService;
 
+import lombok.extern.log4j.Log4j2;
+
 @Service
+@Log4j2
 public class FirebaseUserServiceImpl implements FirebaseUserService {
 
   @Override
@@ -35,6 +38,17 @@ public class FirebaseUserServiceImpl implements FirebaseUserService {
       throw new RuntimeException( e );
     }
 
+  }
+
+  @Override
+  public void deleteFirebaseUserByMail( final String email ) {
+    try {
+      UserRecord userByEmail = FirebaseAuth.getInstance().getUserByEmail( email );
+      FirebaseAuth.getInstance().deleteUser( userByEmail.getUid() );
+      log.debug( "Firebase user with id {} and email {} deleted", userByEmail.getUid(), userByEmail.getEmail() );
+    } catch( FirebaseAuthException e ) {
+      log.debug( "Firebase user does not exist with email {}", email );
+    }
   }
 
 }

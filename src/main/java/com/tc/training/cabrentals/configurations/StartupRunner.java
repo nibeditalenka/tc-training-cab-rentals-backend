@@ -32,11 +32,13 @@ public class StartupRunner implements ApplicationRunner {
       user.setRole( Role.ADMIN );
       user.setEmail( "admin@cr.com" );
       user.setPhoneNum( "+5389234552" );
+
       UserInput userInput = new UserInput();
       userInput.setEmail( user.getEmail() );
       userInput.setName( user.getName() );
       userInput.setPassword( "password" );
       userInput.setPhoneNum( "+5478932425" );
+
       UserRecord userRecord = firebaseUserService.createUser( userInput );
       user.setFirebaseId( userRecord.getUid() );
       user = userService.createOrUpdate( user );
