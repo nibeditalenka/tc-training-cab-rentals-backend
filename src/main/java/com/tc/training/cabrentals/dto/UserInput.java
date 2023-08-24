@@ -1,11 +1,13 @@
 package com.tc.training.cabrentals.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class UserInput {
   private String name;
   private String email;
-  private String phoneNum;
+  private String phoneNumber;
   private String password;
 }

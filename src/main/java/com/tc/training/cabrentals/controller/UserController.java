@@ -1,6 +1,5 @@
 package com.tc.training.cabrentals.controller;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tc.training.cabrentals.dto.LoginInput;
+import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.dto.UserInput;
 import com.tc.training.cabrentals.dto.UserOutput;
+import com.tc.training.cabrentals.enums.Role;
 import com.tc.training.cabrentals.facade.UserFacade;
 
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,10 @@ public class UserController {
   }
 
   @GetMapping
-  public List<UserOutput> getAllEmployee() {
-    return userFacade.getAllEmployee();
+  public PageOutput<UserOutput> getAllEmployee( @RequestParam( required = false, defaultValue = "25" ) Integer pageSize,
+      @RequestParam( required = false, defaultValue = "0" ) Integer pageNumber,
+      @RequestParam( required = false ) Role role ) {
+    return userFacade.getAllEmployee( pageSize, pageNumber, role );
   }
 
   @GetMapping( "/{id}" )
@@ -45,7 +48,7 @@ public class UserController {
     userFacade.deleteEmployeeById( id );
   }
 
-  @PostMapping( "/end-users" )
+  @PostMapping( "/signup" )
   public UserOutput signup( @RequestBody UserInput input ) {
     return userFacade.doSignup( input );
   }

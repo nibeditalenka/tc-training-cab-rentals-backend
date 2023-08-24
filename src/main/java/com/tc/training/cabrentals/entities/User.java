@@ -19,7 +19,7 @@ import lombok.ToString;
 public class User extends BaseEntity {
   private String name;
   private String email;
-  private String phoneNum;
+  private String phoneNumber;
   private String firebaseId;
 
   @Enumerated( EnumType.STRING )

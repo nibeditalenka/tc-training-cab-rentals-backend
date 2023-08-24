@@ -4,9 +4,11 @@ import java.util.UUID;
 
 import com.tc.training.cabrentals.enums.Role;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class UserOutput {
   private UUID id;
   private String name;

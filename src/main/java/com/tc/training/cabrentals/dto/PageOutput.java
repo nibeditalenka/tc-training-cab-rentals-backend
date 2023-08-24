@@ -9,7 +9,7 @@ public class PageOutput<T> {
   private List<T> content;
   private boolean isFirst;
   private boolean isLast;
-  private Integer num;
+  private Integer pageNumber;
   private Integer pageSize;
   private Integer totalPages;
   private Long totalElements;

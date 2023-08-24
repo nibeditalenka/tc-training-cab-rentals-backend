@@ -8,5 +8,5 @@ public interface FirebaseUserService {
 
   String getVerificationLink( String email );
 
-  void deleteFirebaseUserByMail( String email );
+  UserRecord getByEmail( String email );
 }

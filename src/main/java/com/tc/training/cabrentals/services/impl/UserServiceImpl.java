@@ -1,12 +1,15 @@
 package com.tc.training.cabrentals.services.impl;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
+import com.querydsl.core.BooleanBuilder;
+import com.tc.training.cabrentals.entities.QUser;
 import com.tc.training.cabrentals.entities.User;
 import com.tc.training.cabrentals.enums.Role;
 import com.tc.training.cabrentals.repositories.UserRepository;
@@ -25,8 +28,14 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<User> getAll() {
-    return userRepository.findByRole( Role.EMPLOYEE );
+  public Page<User> getAllByFilters( final Integer pageSize, final Integer pageNumber, final Role role ) {
+    BooleanBuilder where = new BooleanBuilder();
+    if( role != null ) {
+      where.and( QUser.user.role.eq( role ) );
+    }
+
+    PageRequest pageRequest = PageRequest.of( pageNumber, pageSize, Sort.by( "name" ) );
+    return userRepository.findAll( where, pageRequest );
   }
 
   @Override
@@ -45,7 +54,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Boolean userExistsByRole( final Role role ) {
-    return !CollectionUtils.isEmpty( userRepository.findByRole( role ) );
+  public Boolean userExistsByRole( Role role ) {
+    return userRepository.existsByRole( role );
   }
 }

@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import com.google.firebase.auth.UserRecord;
 import com.tc.training.cabrentals.dto.LoginInput;
+import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.dto.UserInput;
 import com.tc.training.cabrentals.dto.UserOutput;
 import com.tc.training.cabrentals.entities.User;
@@ -37,9 +39,19 @@ public class UserFacadeIml implements UserFacade {
   }
 
   @Override
-  public List<UserOutput> getAllEmployee() {
-    List<User> users = userService.getAll();
-    return users.stream().map( user -> modelMapper.map( user, UserOutput.class ) ).toList();
+  public PageOutput<UserOutput> getAllEmployee( final Integer pageSize, final Integer pageNumber, final Role role ) {
+    Page<User> users = userService.getAllByFilters( pageSize, pageNumber, role );
+    List<UserOutput> userOutputs = users.stream().map( user -> modelMapper.map( user, UserOutput.class ) ).toList();
+    PageOutput<UserOutput> pageOutput = new PageOutput<>();
+    pageOutput.setPageSize( users.getSize() );
+    pageOutput.setPageNumber( users.getNumber() );
+    pageOutput.setTotalPages( users.getTotalPages() );
+    pageOutput.setTotalElements( users.getTotalElements() );
+    pageOutput.setFirst( users.isFirst() );
+    pageOutput.setLast( users.isLast() );
+    pageOutput.setContent( userOutputs );
+
+    return pageOutput;
   }
 
   @Override

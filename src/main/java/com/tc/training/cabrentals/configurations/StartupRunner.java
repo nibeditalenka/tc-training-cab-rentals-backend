@@ -1,6 +1,5 @@
 package com.tc.training.cabrentals.configurations;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
@@ -19,28 +18,32 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 @Log4j2
 public class StartupRunner implements ApplicationRunner {
-  @Autowired
   private final UserService userService;
   private final FirebaseUserService firebaseUserService;
 
   @Override
-  public void run( final ApplicationArguments args ) throws Exception {
+  public void run( final ApplicationArguments args ) {
     if( !userService.userExistsByRole( Role.ADMIN ) ) {
       log.info( "Creating Admin user" );
       User user = new User();
       user.setName( "Admin" );
       user.setRole( Role.ADMIN );
       user.setEmail( "admin@cr.com" );
-      user.setPhoneNum( "+5389234552" );
 
-      UserInput userInput = new UserInput();
-      userInput.setEmail( user.getEmail() );
-      userInput.setName( user.getName() );
-      userInput.setPassword( "password" );
-      userInput.setPhoneNum( "+5478932425" );
+      try {
+        UserRecord userRecord = firebaseUserService.getByEmail( user.getEmail() );
+        user.setFirebaseId( userRecord.getUid() );
+      } catch( Exception e ) {
+        UserInput userInput = new UserInput();
+        userInput.setEmail( user.getEmail() );
+        userInput.setName( user.getName() );
+        userInput.setPassword( "password" );
 
-      UserRecord userRecord = firebaseUserService.createUser( userInput );
-      user.setFirebaseId( userRecord.getUid() );
+        UserRecord userRecord = firebaseUserService.createUser( userInput );
+        
+        user.setFirebaseId( userRecord.getUid() );
+      }
+
       user = userService.createOrUpdate( user );
       log.info( "Admin user created {}", user );
     }
