@@ -1,7 +1,5 @@
 package com.tc.training.cabrentals.facade;
 
-import java.util.UUID;
-
 import com.tc.training.cabrentals.dto.LoginInput;
 import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.dto.UserInput;
@@ -13,9 +11,9 @@ public interface UserFacade {
 
   PageOutput<UserOutput> getAllEmployee( final Integer pageSize, final Integer pageNumber, Role role );
 
-  UserOutput getEmployeeById( UUID id );
+  UserOutput getEmployeeById( String id );
 
-  void deleteEmployeeById( UUID id );
+  void deleteEmployeeById( String id );
 
   UserOutput doSignup( UserInput input );
 

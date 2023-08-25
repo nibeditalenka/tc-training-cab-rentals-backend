@@ -1,7 +1,5 @@
 package com.tc.training.cabrentals.facade.impl;
 
-import java.util.UUID;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -38,7 +36,7 @@ public class CarFacadeImpl implements CarFacade {
   }
 
   @Override
-  public CarOutput deleteCar( UUID id, CarStatus carStatus ) {
+  public CarOutput deleteCar( String id, CarStatus carStatus ) {
     Car carUpdate = carService.getCarById( id );
     carUpdate.setCarStatus( carStatus );
     carService.createOrUpdate( carUpdate );
@@ -46,7 +44,7 @@ public class CarFacadeImpl implements CarFacade {
   }
 
   @Override
-  public CarOutput updateCar( UUID id, CarInput carInput ) {
+  public CarOutput updateCar( String id, CarInput carInput ) {
     Car carUpdate = carService.getCarById( id );
     carUpdate = modelMapper.map( carInput, Car.class );
     carUpdate = carService.createOrUpdate( carUpdate );

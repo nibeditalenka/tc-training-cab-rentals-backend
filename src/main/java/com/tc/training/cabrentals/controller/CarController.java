@@ -1,7 +1,5 @@
 package com.tc.training.cabrentals.controller;
 
-import java.util.UUID;
-
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -34,12 +32,12 @@ public class CarController {
   }
 
   @PatchMapping( "update-status/{id}" )
-  public CarOutput deleteCar( @PathVariable UUID id, @RequestParam CarStatus status ) {
+  public CarOutput deleteCar( @PathVariable String id, @RequestParam CarStatus status ) {
     return carFacade.deleteCar( id, status );
   }
 
   @PutMapping( "update-car/{id}" )
-  public CarOutput updateCar( @PathVariable UUID id, @RequestBody CarInput carInput ) {
+  public CarOutput updateCar( @PathVariable String id, @RequestBody CarInput carInput ) {
     return carFacade.updateCar( id, carInput );
   }
 

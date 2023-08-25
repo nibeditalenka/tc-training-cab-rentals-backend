@@ -1,7 +1,5 @@
 package com.tc.training.cabrentals.dto;
 
-import java.util.UUID;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +17,5 @@ public class CarInput {
   private Float price;
   private Boolean automatic;
   private String image;
-  private UUID centerId;
+  private String centerId;
 }

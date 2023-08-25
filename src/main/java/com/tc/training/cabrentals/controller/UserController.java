@@ -1,7 +1,5 @@
 package com.tc.training.cabrentals.controller;
 
-import java.util.UUID;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,12 +37,12 @@ public class UserController {
   }
 
   @GetMapping( "/{id}" )
-  public UserOutput getEmployeeById( @PathVariable UUID id ) {
+  public UserOutput getEmployeeById( @PathVariable String id ) {
     return userFacade.getEmployeeById( id );
   }
 
   @DeleteMapping
-  public void deleteEmployeeById( @RequestParam UUID id ) {
+  public void deleteEmployeeById( @RequestParam String id ) {
     userFacade.deleteEmployeeById( id );
   }
 

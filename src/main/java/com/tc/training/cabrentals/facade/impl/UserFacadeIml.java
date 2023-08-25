@@ -1,12 +1,20 @@
 package com.tc.training.cabrentals.facade.impl;
 
-import java.util.UUID;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
+import com.google.api.client.util.Value;
 import com.google.firebase.auth.UserRecord;
+import com.google.gson.Gson;
 import com.tc.training.cabrentals.dto.LoginInput;
 import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.dto.UserInput;
@@ -27,6 +35,10 @@ public class UserFacadeIml implements UserFacade {
   private final UserService userService;
   private final ModelMapper modelMapper;
   private final FirebaseUserService firebaseUserService;
+  @Value( "${firebase.api-key}" )
+  private String firebaseApiKey;
+  @Value( "${firebase.accounts.url}" )
+  private String firebaseUrl;
 
   @Override
   public UserOutput createEmployee( UserInput input ) {
@@ -45,14 +57,14 @@ public class UserFacadeIml implements UserFacade {
   }
 
   @Override
-  public UserOutput getEmployeeById( UUID id ) {
+  public UserOutput getEmployeeById( String id ) {
     User user = userService.getById( id )
         .orElseThrow( () -> new ResourceNotFoundException( "User not found with this id" ) );
     return modelMapper.map( user, UserOutput.class );
   }
 
   @Override
-  public void deleteEmployeeById( UUID id ) {
+  public void deleteEmployeeById( String id ) {
     userService.deleteById( id );
   }
 
@@ -69,6 +81,17 @@ public class UserFacadeIml implements UserFacade {
 
   @Override
   public UserOutput doLogin( final LoginInput input ) {
+    String url = firebaseUrl + "signInWithPassword?key=" + firebaseApiKey;
+    Map<String, Object> requestBody = new HashMap<>();
+    requestBody.put( "email", input.getEmail() );
+    requestBody.put( "password", input.getPassword() );
+    requestBody.put( "retuenSecureToken", true );
+    RestTemplate restTemplate = new RestTemplate();
+    HttpHeaders httpHeaders = new HttpHeaders();
+    HttpEntity<?> httpEntity = new HttpEntity<>( requestBody, httpHeaders );
+    ResponseEntity<String> response = restTemplate.exchange( url, HttpMethod.POST, httpEntity, String.class );
+    String body = response.getBody();
+    Gson gson = new Gson();
     return null;
   }
 

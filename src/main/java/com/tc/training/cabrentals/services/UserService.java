@@ -1,7 +1,6 @@
 package com.tc.training.cabrentals.services;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 
@@ -13,9 +12,9 @@ public interface UserService {
 
   Page<User> getAllByFilters( final Integer pageSize, final Integer pageNumber, final Role role );
 
-  Optional<User> getById( UUID id );
+  Optional<User> getById( String id );
 
-  void deleteById( UUID id );
+  void deleteById( String id );
 
   User add( User user );
 
