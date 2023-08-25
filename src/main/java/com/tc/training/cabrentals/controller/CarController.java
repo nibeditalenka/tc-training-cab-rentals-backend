@@ -33,12 +33,12 @@ public class CarController {
     return carFacade.addCar( carInput );
   }
 
-  @PatchMapping( "update-status/{id}" )
+  @PatchMapping( "{id}" )
   public CarOutput deleteCar( @PathVariable UUID id, @RequestParam CarStatus status ) {
     return carFacade.deleteCar( id, status );
   }
 
-  @PutMapping( "update-car/{id}" )
+  @PutMapping( "/{id}" )
   public CarOutput updateCar( @PathVariable UUID id, @RequestBody CarInput carInput ) {
     return carFacade.updateCar( id, carInput );
   }
@@ -52,8 +52,14 @@ public class CarController {
       @RequestParam( required = false ) String model, @RequestParam( required = false ) String seater,
       @RequestParam( required = false ) String mileage, @RequestParam( required = false ) Float minPrice,
       @RequestParam( required = false ) Float maxPrice, @RequestParam( required = false ) Boolean automatic,
-      @RequestParam( required = false ) Integer tripCount, @RequestParam( required = false ) Float averageRatings ) {
+      @RequestParam( required = false ) Integer tripCount, @RequestParam( required = false ) Float averageRatings,
+      @RequestParam( required = false ) UUID centerId ) {
     return carFacade.getAllCar( pageNumber, pageSize, sortBy, sortDirection, query, type, model, seater, mileage,
-        minPrice, maxPrice, automatic, tripCount, averageRatings );
+        minPrice, maxPrice, automatic, tripCount, averageRatings, centerId );
+  }
+
+  @GetMapping( "/{id}" )
+  public CarOutput getCarById( @PathVariable UUID id ) {
+    return carFacade.getCarById( id );
   }
 }

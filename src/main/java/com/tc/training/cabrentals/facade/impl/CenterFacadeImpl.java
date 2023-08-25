@@ -3,7 +3,9 @@ package com.tc.training.cabrentals.facade.impl;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -66,6 +68,22 @@ public class CenterFacadeImpl implements CenterFacade {
 
     Page<Center> centerPage = centerService.getAll( pageNumber, pageSize, sortBy, sortDirection, name, city );
     return AppUtils.convertPageToPageOutput( centerPage, CenterOutput.class );
+  }
+
+  @Override
+  public CenterOutput getById( final UUID id ) {
+    Center center = centerService.getById( id );
+    return modelMapper.map( center, CenterOutput.class );
+  }
+
+  @Override
+  public CenterOutput updateCenter( UUID id, CenterInput centerInput ) {
+    Center center = centerService.getById( id );
+    modelMapper.getConfiguration().setMatchingStrategy( MatchingStrategies.STRICT )
+        .setPropertyCondition( Conditions.isNotNull() );
+    modelMapper.map( centerInput, center );
+    center = centerService.createOrUpdate( center );
+    return modelMapper.map( center, CenterOutput.class );
   }
 
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +32,7 @@ class CenterController {
     return centerFacade.add( centerInput );
   }
 
-  @PatchMapping( "/{id}" )
+  @PatchMapping( "delete/{id}" )
   public void delete( @PathVariable UUID id, @RequestBody CenterTransferDto centerTransferDto ) {
     centerFacade.delete( id, centerTransferDto );
   }
@@ -43,5 +44,15 @@ class CenterController {
       @RequestParam( required = false, defaultValue = "ASC" ) Sort.Direction sortDirection,
       @RequestParam( required = false ) String name, @RequestParam( required = false ) String city ) {
     return centerFacade.getAll( pageNumber, pageSize, sortBy, sortDirection, name, city );
+  }
+
+  @GetMapping( "/{id}" )
+  public CenterOutput getById( @PathVariable UUID id ) {
+    return centerFacade.getById( id );
+  }
+
+  @PutMapping( { "/{id}" } )
+  public CenterOutput updateCenter( @PathVariable UUID id, @RequestBody CenterInput centerInput ) {
+    return centerFacade.updateCenter( id, centerInput );
   }
 }

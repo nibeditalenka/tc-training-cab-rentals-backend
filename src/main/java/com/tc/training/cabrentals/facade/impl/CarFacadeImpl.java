@@ -56,9 +56,15 @@ public class CarFacadeImpl implements CarFacade {
   @Override
   public PageOutput<CarOutput> getAllCar( Integer pageNumber, Integer pageSize, String sortBy,
       Sort.Direction sortDirection, String query, String type, String model, String seater, String mileage,
-      Float minPrice, Float maxPrice, Boolean automatic, Integer tripCount, Float averageRatings ) {
+      Float minPrice, Float maxPrice, Boolean automatic, Integer tripCount, Float averageRatings, UUID centerId ) {
     Page<Car> carPage = carService.getAllCars( pageNumber, pageSize, sortBy, sortDirection, query, type, model, seater,
-        mileage, minPrice, maxPrice, automatic, tripCount, averageRatings );
+        mileage, minPrice, maxPrice, automatic, tripCount, averageRatings, centerId );
     return AppUtils.convertPageToPageOutput( carPage, CarOutput.class );
+  }
+
+  @Override
+  public CarOutput getCarById( final UUID id ) {
+    Car output = carService.getCarById( id );
+    return modelMapper.map( output, CarOutput.class );
   }
 }

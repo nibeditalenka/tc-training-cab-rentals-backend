@@ -36,7 +36,7 @@ public class CarServiceImpl implements CarService {
   @Override
   public Page<Car> getAllCars( Integer pageNumber, Integer pageSize, String sortBy, Sort.Direction sortDirection,
       String query, String type, String model, String seater, String mileage, Float minPrice, Float maxPrice,
-      Boolean automatic, Integer tripCount, Float averageRatings ) {
+      Boolean automatic, Integer tripCount, Float averageRatings, UUID centerId ) {
 
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     if( StringUtils.hasText( type ) ) {
@@ -60,8 +60,11 @@ public class CarServiceImpl implements CarService {
     if( averageRatings != null ) {
       booleanBuilder.and( qCar.averageRatings.goe( averageRatings ) );
     }
+    if( centerId != null ) {
+      booleanBuilder.and( qCar.center.id.eq( centerId ) );
+    }
 
-    final PageRequest pageRequest = PageRequest.of( pageNumber, pageSize, Sort.by( sortDirection, sortBy ) );
+    PageRequest pageRequest = PageRequest.of( pageNumber, pageSize, Sort.by( sortDirection, sortBy ) );
     return carRepository.findAll( booleanBuilder, pageRequest );
   }
 }
