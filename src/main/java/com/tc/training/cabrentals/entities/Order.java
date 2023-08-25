@@ -1,11 +1,10 @@
 package com.tc.training.cabrentals.entities;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.tc.training.cabrentals.enums.OrderStatus;
@@ -21,6 +20,6 @@ public class Order extends BaseEntity {
   private OrderStatus orderStatus;
   @ManyToOne
   private User user;
-  @OneToMany
-  private List<Car> car;
+  @OneToOne
+  private Car car;
 }
