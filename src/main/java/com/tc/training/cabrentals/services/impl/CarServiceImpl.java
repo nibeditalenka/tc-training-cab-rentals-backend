@@ -1,5 +1,7 @@
 package com.tc.training.cabrentals.services.impl;
 
+import java.util.UUID;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -27,7 +29,7 @@ public class CarServiceImpl implements CarService {
   }
 
   @Override
-  public Car getCarById( final String id ) {
+  public Car getCarById( final UUID id ) {
     return carRepository.findById( id ).orElse( null );
   }
 

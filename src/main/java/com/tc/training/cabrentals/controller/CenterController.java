@@ -1,5 +1,7 @@
 package com.tc.training.cabrentals.controller;
 
+import java.util.UUID;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -30,7 +32,7 @@ class CenterController {
   }
 
   @PatchMapping( "/{id}" )
-  public void delete( @PathVariable String id, @RequestBody CenterTransferDto centerTransferDto ) {
+  public void delete( @PathVariable UUID id, @RequestBody CenterTransferDto centerTransferDto ) {
     centerFacade.delete( id, centerTransferDto );
   }
 

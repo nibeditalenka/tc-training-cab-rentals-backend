@@ -1,6 +1,7 @@
 package com.tc.training.cabrentals.dto;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OrderOutput {
-  private String id;
+  private UUID id;
   private String city;
   private String carName;
   private LocalDateTime pickUpOrder;

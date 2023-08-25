@@ -1,5 +1,7 @@
 package com.tc.training.cabrentals.services.impl;
 
+import java.util.UUID;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -25,7 +27,7 @@ public class CenterServiceImpl implements CenterService {
     return centerRepository.save( center );
   }
 
-  public Center getById( String id ) {
+  public Center getById( UUID id ) {
     return centerRepository.findById( id ).orElse( ( null ) );
   }
 

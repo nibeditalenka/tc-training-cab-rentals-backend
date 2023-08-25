@@ -1,6 +1,7 @@
 package com.tc.training.cabrentals.facade.impl;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -45,7 +46,7 @@ public class CenterFacadeImpl implements CenterFacade {
   }
 
   @Override
-  public void delete( String id, CenterTransferDto centerTransferDto ) {
+  public void delete( UUID id, CenterTransferDto centerTransferDto ) {
     Center centerToBeDeleted = centerService.getById( id );
     if( centerTransferDto.getIsTransferringCars().equals( Boolean.TRUE ) ) {
       Center toCenter = centerService.getById( centerTransferDto.getCenterId() );

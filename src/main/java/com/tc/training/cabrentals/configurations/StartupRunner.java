@@ -40,7 +40,7 @@ public class StartupRunner implements ApplicationRunner {
         userInput.setPassword( "password" );
 
         UserRecord userRecord = firebaseUserService.createUser( userInput );
-
+        
         user.setFirebaseId( userRecord.getUid() );
       }
 

@@ -1,6 +1,7 @@
 package com.tc.training.cabrentals.services.impl;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,12 +39,12 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Optional<User> getById( String id ) {
+  public Optional<User> getById( UUID id ) {
     return userRepository.findById( id );
   }
 
   @Override
-  public void deleteById( String id ) {
+  public void deleteById( UUID id ) {
     userRepository.deleteById( id );
   }
 

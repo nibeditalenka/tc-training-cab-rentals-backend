@@ -2,10 +2,10 @@ package com.tc.training.cabrentals.entities;
 
 import java.util.UUID;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-
-import org.springframework.data.annotation.Version;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,9 +19,9 @@ import lombok.ToString;
 @MappedSuperclass
 public class BaseEntity {
   @Id
+  @GeneratedValue( strategy = GenerationType.AUTO )
   @EqualsAndHashCode.Include
-  protected String id = UUID.randomUUID().toString();
+  protected UUID id;
 
-  @Version
   protected String version;
 }

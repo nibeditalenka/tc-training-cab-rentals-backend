@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -18,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @Table( name = "centers" )
 public class Center extends BaseEntity {
   private String name;
-  @OneToOne( cascade = CascadeType.ALL, fetch = FetchType.LAZY )
+  @OneToOne( cascade = CascadeType.ALL )
   private Address address;
   @OneToMany
   private List<Car> cars;
