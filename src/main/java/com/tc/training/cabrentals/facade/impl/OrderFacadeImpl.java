@@ -18,7 +18,7 @@ public class OrderFacadeImpl implements OrderFacade {
   private final ModelMapper modelMapper;
 
   @Override
-  public OrderOutput placeOrder( final OrderInput input ) {
+  public OrderOutput placeOrder( OrderInput input ) {
     Order order = modelMapper.map( input, Order.class );
     orderService.create( order );
     return modelMapper.map( order, OrderOutput.class );

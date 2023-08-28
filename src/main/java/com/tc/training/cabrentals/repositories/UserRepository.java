@@ -12,4 +12,6 @@ import com.tc.training.cabrentals.enums.Role;
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID>, QuerydslPredicateExecutor<User> {
   Boolean existsByRole( Role role );
+
+  User findByFirebaseId( String id );
 }

@@ -49,12 +49,12 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User add( User user ) {
-    return userRepository.save( user );
+  public Boolean userExistsByRole( Role role ) {
+    return userRepository.existsByRole( role );
   }
 
   @Override
-  public Boolean userExistsByRole( Role role ) {
-    return userRepository.existsByRole( role );
+  public User getByFirebaseId( String firebaseId ) {
+    return userRepository.findByFirebaseId( firebaseId );
   }
 }

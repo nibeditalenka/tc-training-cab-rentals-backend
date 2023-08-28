@@ -17,7 +17,7 @@ public interface UserService {
 
   void deleteById( UUID id );
 
-  User add( User user );
-
   Boolean userExistsByRole( Role role );
+
+  User getByFirebaseId( String firebaseId );
 }

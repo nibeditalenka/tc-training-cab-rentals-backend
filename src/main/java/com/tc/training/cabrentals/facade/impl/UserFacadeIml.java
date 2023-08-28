@@ -1,12 +1,23 @@
 package com.tc.training.cabrentals.facade.impl;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import com.google.firebase.auth.UserRecord;
+import com.google.gson.Gson;
+import com.tc.training.cabrentals.dto.FirebaseTokenOutput;
+import com.tc.training.cabrentals.dto.LogInOutput;
 import com.tc.training.cabrentals.dto.LoginInput;
 import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.dto.UserInput;
@@ -27,6 +38,10 @@ public class UserFacadeIml implements UserFacade {
   private final UserService userService;
   private final ModelMapper modelMapper;
   private final FirebaseUserService firebaseUserService;
+  @Value( "${firebase.api-key}" )
+  private String firebaseApiKey;
+  @Value( "${firebase.accounts.url}" )
+  private String firebaseUrl;
 
   @Override
   public UserOutput createEmployee( UserInput input ) {
@@ -62,14 +77,32 @@ public class UserFacadeIml implements UserFacade {
     user.setRole( Role.END_USER );
     UserRecord userRecord = firebaseUserService.createUser( input );
     user.setFirebaseId( userRecord.getUid() );
-    User add = userService.add( user );
+    User add = userService.createOrUpdate( user );
     String verificationLink = firebaseUserService.getVerificationLink( add.getEmail() );
     return modelMapper.map( add, UserOutput.class );
   }
 
   @Override
-  public UserOutput doLogin( final LoginInput input ) {
-    return null;
+  public LogInOutput doLogin( LoginInput input ) {
+    String url = firebaseUrl + ":signInWithPassword?key=" + firebaseApiKey;
+    Map<String, Object> requestBody = new HashMap<>();
+    requestBody.put( "email", input.getEmail() );
+    requestBody.put( "password", input.getPassword() );
+    requestBody.put( "returnSecureToken", true );
+    RestTemplate restTemplate = new RestTemplate();
+    HttpHeaders httpHeaders = new HttpHeaders();
+    HttpEntity<?> httpEntity = new HttpEntity<>( requestBody, httpHeaders );
+    ResponseEntity<String> response = restTemplate.exchange( url, HttpMethod.POST, httpEntity, String.class );
+    String body = response.getBody();
+    Gson gson = new Gson();
+    FirebaseTokenOutput firebaseTokenOutput = gson.fromJson( body, FirebaseTokenOutput.class );
+    LogInOutput logInOutput = new LogInOutput();
+    logInOutput.setExpiresIn( firebaseTokenOutput.getExpiresIn() );
+    logInOutput.setAccessToken( firebaseTokenOutput.getIdToken() );
+    logInOutput.setRefreshToken( firebaseTokenOutput.getRefreshToken() );
+    User user = userService.getByFirebaseId( firebaseTokenOutput.getLocalId() );
+    logInOutput.setUser( modelMapper.map( user, UserOutput.class ) );
+    return logInOutput;
   }
 
 }

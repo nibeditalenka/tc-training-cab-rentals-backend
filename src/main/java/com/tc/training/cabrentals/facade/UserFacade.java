@@ -2,6 +2,7 @@ package com.tc.training.cabrentals.facade;
 
 import java.util.UUID;
 
+import com.tc.training.cabrentals.dto.LogInOutput;
 import com.tc.training.cabrentals.dto.LoginInput;
 import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.dto.UserInput;
@@ -19,5 +20,5 @@ public interface UserFacade {
 
   UserOutput doSignup( UserInput input );
 
-  UserOutput doLogin( LoginInput input );
+  LogInOutput doLogin( LoginInput input );
 }
