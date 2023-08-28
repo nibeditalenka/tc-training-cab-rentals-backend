@@ -16,4 +16,8 @@ public interface CenterFacade {
 
   PageOutput<CenterOutput> getAll( Integer pageNumber, Integer pageSize, String sortBy, Sort.Direction sortDirection,
       String name, String city );
+
+  CenterOutput getById( UUID id );
+
+  CenterOutput updateCenter( UUID id, CenterInput centerInput );
 }

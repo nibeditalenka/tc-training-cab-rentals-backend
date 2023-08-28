@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import com.querydsl.core.BooleanBuilder;
 import com.tc.training.cabrentals.entities.Center;
 import com.tc.training.cabrentals.entities.QCenter;
+import com.tc.training.cabrentals.exception.ResourceNotFoundException;
 import com.tc.training.cabrentals.repositories.CenterRepository;
 import com.tc.training.cabrentals.services.CenterService;
 
@@ -28,7 +29,8 @@ public class CenterServiceImpl implements CenterService {
   }
 
   public Center getById( UUID id ) {
-    return centerRepository.findById( id ).orElse( ( null ) );
+    return centerRepository.findById( id )
+        .orElseThrow( () -> new ResourceNotFoundException( "center not found for this id" ) );
   }
 
   @Override
@@ -42,7 +44,7 @@ public class CenterServiceImpl implements CenterService {
     if( StringUtils.hasText( city ) ) {
       booleanBuilder.and( qCenter.address.city.startsWithIgnoreCase( city ) );
     }
-    final PageRequest pageRequest = PageRequest.of( pageNumber, pageSize, Sort.by( sortDirection, sortBy ) );
+    PageRequest pageRequest = PageRequest.of( pageNumber, pageSize, Sort.by( sortDirection, sortBy ) );
     return centerRepository.findAll( booleanBuilder, pageRequest );
   }
 
