@@ -12,7 +12,6 @@ import lombok.Setter;
 @Setter
 public class OrderInput {
   private UUID carId;
-  private UUID userId; // current user thread
   private LocalDateTime pickUpOrder;
   private LocalDateTime returnDate;
   private OrderStatus status;

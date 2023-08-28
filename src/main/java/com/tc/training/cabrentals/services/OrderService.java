@@ -4,4 +4,6 @@ import com.tc.training.cabrentals.entities.Order;
 
 public interface OrderService {
   Order create( Order order );
+
+  Iterable<Order> getAll();
 }
