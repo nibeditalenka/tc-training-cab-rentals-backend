@@ -1,4 +1,4 @@
-package com.tc.training.cabrentals.configurations;
+package com.tc.training.cabrentals.filter;
 
 import java.io.IOException;
 
@@ -30,13 +30,12 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal( final HttpServletRequest request, final HttpServletResponse response,
       final FilterChain filterChain ) throws ServletException, IOException {
+    HttpMethod method = HttpMethod.valueOf( request.getMethod() );
+    String uri = request.getRequestURI();
     if( true ) {
       filterChain.doFilter( request, response );
     } else {
       String token = request.getHeader( HttpHeaders.AUTHORIZATION );
-      HttpMethod method = HttpMethod.valueOf( request.getMethod() );
-      String uri = request.getRequestURI();
-      uri = uri.replaceAll( "[0-9]+", "{id}" );
 
       if( method.equals( HttpMethod.OPTIONS ) ) {
         filterChain.doFilter( request, response );
