@@ -53,6 +53,10 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter {
         }
       }
     }
+    response.setHeader( "Access-Control-Allow-Origin", "*" );
+    response.setHeader( "Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE" );
+    response.setHeader( "Access-Control-Allow-Headers",
+        "X-Requested-With,Origin,Content-Type, Accept, x-device-user-agent, Content-Type" );
   }
 
   @Override
