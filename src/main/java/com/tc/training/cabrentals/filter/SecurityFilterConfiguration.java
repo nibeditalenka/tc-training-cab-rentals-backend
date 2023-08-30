@@ -57,8 +57,7 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter {
 
   @Override
   protected boolean shouldNotFilter( final HttpServletRequest request ) throws ServletException {
-    List<Map<String, Object>> publicApis = List.of(
-        Map.of( "url", "/swagger-ui/index.html", "method", RequestMethod.GET ) );
+    List<Map<String, Object>> publicApis = List.of( Map.of( "url", "/users/login", "method", RequestMethod.POST ) );
 
     String requestURI = request.getRequestURI();
     RequestMethod requestMethod = RequestMethod.valueOf( request.getMethod() );
