@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import com.querydsl.core.BooleanBuilder;
 import com.tc.training.cabrentals.entities.Car;
 import com.tc.training.cabrentals.entities.QCar;
+import com.tc.training.cabrentals.enums.Gear;
 import com.tc.training.cabrentals.repositories.CarRepository;
 import com.tc.training.cabrentals.services.CarService;
 
@@ -35,8 +36,8 @@ public class CarServiceImpl implements CarService {
 
   @Override
   public Page<Car> getAllCars( Integer pageNumber, Integer pageSize, String sortBy, Sort.Direction sortDirection,
-      String query, String type, String model, String seater, String mileage, Float minPrice, Float maxPrice,
-      Boolean automatic, Integer tripCount, Float averageRatings, UUID centerId ) {
+      String query, String type, String model, String seater, String mileage, Float minPrice, Float maxPrice, Gear gear,
+      Integer tripCount, Float averageRatings, UUID centerId ) {
 
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     if( StringUtils.hasText( type ) ) {
@@ -51,8 +52,8 @@ public class CarServiceImpl implements CarService {
     if( minPrice != null && maxPrice != null ) {
       booleanBuilder.and( qCar.price.between( minPrice, maxPrice ) );
     }
-    if( automatic != null ) {
-      booleanBuilder.and( qCar.automatic.eq( automatic ) );
+    if( gear != null ) {
+      booleanBuilder.and( qCar.gear.eq( gear ) );
     }
     if( tripCount != null ) {
       booleanBuilder.and( qCar.tripCount.eq( tripCount ) );

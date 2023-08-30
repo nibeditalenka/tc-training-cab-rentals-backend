@@ -2,6 +2,8 @@ package com.tc.training.cabrentals.dto;
 
 import java.util.UUID;
 
+import com.tc.training.cabrentals.enums.Gear;
+
 import lombok.Data;
 
 @Data
@@ -13,8 +15,8 @@ public class CarOutput {
   private String seater;
   private String mileage;
   private Float price;
-  private Boolean automatic;
   private String image;
   private UUID centerId;
   private String plateNumber;
+  private Gear gear;
 }

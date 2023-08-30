@@ -8,6 +8,7 @@ import com.tc.training.cabrentals.dto.CarInput;
 import com.tc.training.cabrentals.dto.CarOutput;
 import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.enums.CarStatus;
+import com.tc.training.cabrentals.enums.Gear;
 
 public interface CarFacade {
   CarOutput addCar( CarInput carInput );
@@ -17,8 +18,8 @@ public interface CarFacade {
   CarOutput updateCar( UUID id, CarInput carInput );
 
   PageOutput<CarOutput> getAllCar( Integer pageNumber, Integer pageSize, String sortBy, Sort.Direction sortDirection,
-      String query, String type, String model, String seater, String mileage, Float minPrice, Float maxPrice,
-      Boolean automatic, Integer tripCount, Float averageRatings, UUID centerId );
+      String query, String type, String model, String seater, String mileage, Float minPrice, Float maxPrice, Gear gear,
+      Integer tripCount, Float averageRatings, UUID centerId );
 
   CarOutput getCarById( UUID id );
 }
