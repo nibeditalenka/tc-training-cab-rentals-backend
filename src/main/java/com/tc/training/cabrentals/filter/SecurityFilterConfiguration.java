@@ -47,6 +47,7 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter {
             String firebaseId = firebaseToken.getUid();
             User user = userService.getByFirebaseId( firebaseId );
             CurrentUser.set( user );
+            filterChain.doFilter( request, response );
           } catch( FirebaseAuthException e ) {
             throw new RuntimeException( e );
           }
