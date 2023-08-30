@@ -1,6 +1,8 @@
 package com.tc.training.cabrentals.filter;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.google.common.net.HttpHeaders;
@@ -33,7 +36,7 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter {
     HttpMethod method = HttpMethod.valueOf( request.getMethod() );
     String uri = request.getRequestURI();
     String token = request.getHeader( HttpHeaders.AUTHORIZATION );
-    if( method.equals( HttpMethod.OPTIONS ) ) {
+    if( method.equals( HttpMethod.OPTIONS ) || !StringUtils.hasText( token ) ) {
       filterChain.doFilter( request, response );
     } else {
       if( StringUtils.hasText( token ) && ( token.startsWith( "Bearer" ) ) ) {
@@ -49,8 +52,20 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter {
           }
         }
       }
-
     }
   }
+
+  @Override
+  protected boolean shouldNotFilter( final HttpServletRequest request ) throws ServletException {
+    List<Map<String, Object>> publicApis = List.of(
+        Map.of( "url", "/swagger-ui/index.html", "method", RequestMethod.GET ) );
+
+    String requestURI = request.getRequestURI();
+    RequestMethod requestMethod = RequestMethod.valueOf( request.getMethod() );
+
+    return publicApis.stream()
+        .anyMatch( api -> api.get( "url" ).equals( requestURI ) && api.get( "method" ).equals( requestMethod ) );
+  }
+
 }
 
