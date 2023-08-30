@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 public class OrderOutput {
   private UUID id;
+  private Float price;
   private CarOutput car;
   private CenterOutput center;
   private LocalDateTime pickUpOrder;

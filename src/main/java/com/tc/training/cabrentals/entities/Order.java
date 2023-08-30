@@ -22,4 +22,5 @@ public class Order extends BaseEntity {
   private User user;
   @OneToOne
   private Car car;
+  private Float price;
 }

@@ -34,6 +34,7 @@ public class OrderFacadeImpl implements OrderFacade {
     order.setOrderStatus( OrderStatus.PENDING );
     Car car = carService.getCarById( input.getCarId() );
     order.setCar( car );
+    order.setPrice( car.getPrice() );
 
     order.setUser( CurrentUser.get() );
     order = orderService.create( order );
@@ -45,7 +46,8 @@ public class OrderFacadeImpl implements OrderFacade {
 
   @Override
   public List<OrderOutput> getAll() {
-    return null;
+    List<Order> orders = orderService.getAll();
+    return orders.stream().map( order -> modelMapper.map( order, OrderOutput.class ) ).toList();
   }
 
   @Override
