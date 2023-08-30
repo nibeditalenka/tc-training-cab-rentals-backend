@@ -17,6 +17,7 @@ import com.tc.training.cabrentals.dto.CarInput;
 import com.tc.training.cabrentals.dto.CarOutput;
 import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.enums.CarStatus;
+import com.tc.training.cabrentals.enums.Gear;
 import com.tc.training.cabrentals.facade.CarFacade;
 
 import lombok.RequiredArgsConstructor;
@@ -51,11 +52,11 @@ public class CarController {
       @RequestParam( required = false ) String query, @RequestParam( required = false ) String type,
       @RequestParam( required = false ) String model, @RequestParam( required = false ) String seater,
       @RequestParam( required = false ) String mileage, @RequestParam( required = false ) Float minPrice,
-      @RequestParam( required = false ) Float maxPrice, @RequestParam( required = false ) Boolean automatic,
+      @RequestParam( required = false ) Float maxPrice, @RequestParam( required = false ) Gear gear,
       @RequestParam( required = false ) Integer tripCount, @RequestParam( required = false ) Float averageRatings,
       @RequestParam( required = false ) UUID centerId ) {
     return carFacade.getAllCar( pageNumber, pageSize, sortBy, sortDirection, query, type, model, seater, mileage,
-        minPrice, maxPrice, automatic, tripCount, averageRatings, centerId );
+        minPrice, maxPrice, gear, tripCount, averageRatings, centerId );
   }
 
   @GetMapping( "/{id}" )
