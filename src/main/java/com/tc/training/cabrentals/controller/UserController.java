@@ -58,4 +58,9 @@ public class UserController {
   public LogInOutput login( @RequestBody LoginInput input ) {
     return userFacade.doLogin( input );
   }
+
+  @GetMapping( "/me" )
+  public UserOutput getMe() {
+    return userFacade.getMe();
+  }
 }
