@@ -33,6 +33,13 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal( final HttpServletRequest request, final HttpServletResponse response,
       final FilterChain filterChain ) throws ServletException, IOException {
+    response.setHeader( "Access-Control-Allow-Origin", "*" );
+    response.setHeader( "Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE" );
+    response.setHeader( "Access-Control-Allow-Credentials", "true" );
+    response.setHeader( "Access-Control-Max-Age", "3600" );
+    response.setHeader( "Access-Control-Allow-Headers",
+        "X-Requested-With,Origin,Content-Type, Accept, x-device-user-agent, Content-Type, remember-me" );
+
     HttpMethod method = HttpMethod.valueOf( request.getMethod() );
     String uri = request.getRequestURI();
     String token = request.getHeader( HttpHeaders.AUTHORIZATION );
@@ -54,10 +61,6 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter {
         }
       }
     }
-    response.setHeader( "Access-Control-Allow-Origin", "*" );
-    response.setHeader( "Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE" );
-    response.setHeader( "Access-Control-Allow-Headers",
-        "X-Requested-With,Origin,Content-Type, Accept, x-device-user-agent, Content-Type" );
   }
 
   @Override
