@@ -54,9 +54,10 @@ public class CarController {
       @RequestParam( required = false ) String mileage, @RequestParam( required = false ) Float minPrice,
       @RequestParam( required = false ) Float maxPrice, @RequestParam( required = false ) Gear gear,
       @RequestParam( required = false ) Integer tripCount, @RequestParam( required = false ) Float averageRatings,
+      @RequestParam( required = false, defaultValue = "AVAILABLE" ) CarStatus status,
       @RequestParam( required = false ) UUID centerId ) {
     return carFacade.getAllCar( pageNumber, pageSize, sortBy, sortDirection, query, type, model, seater, mileage,
-        minPrice, maxPrice, gear, tripCount, averageRatings, centerId );
+        minPrice, maxPrice, gear, tripCount, averageRatings, status, centerId );
   }
 
   @GetMapping( "/{id}" )
