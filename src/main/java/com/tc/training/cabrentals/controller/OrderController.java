@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tc.training.cabrentals.dto.OrderInput;
@@ -24,23 +25,28 @@ public class OrderController {
   private final OrderFacade orderFacade;
 
   @PostMapping
-  public OrderOutput placeOrder( OrderInput input ) {
+  public OrderOutput placeOrder( @RequestBody OrderInput input ) {
     return orderFacade.placeOrder( input );
   }
 
   @GetMapping
   public List<OrderOutput> getAll() {
-    return null;
+    return orderFacade.getAll();
   }
 
   @GetMapping( "/{id}" )
   public OrderOutput getOrderById( @PathVariable UUID id ) {
-    return null;
+    return orderFacade.getById( id );
   }
 
-  @DeleteMapping
-  public void deleteOrderById( @RequestParam UUID id ) {
+  @PutMapping( "/{id}" )
+  public OrderOutput updateOrderById( @PathVariable UUID id, @RequestBody OrderInput input ) {
+    return orderFacade.updateOrder( id, input );
+  }
 
+  @DeleteMapping( "/{id}" )
+  public void deleteOrderById( @PathVariable UUID id ) {
+    orderFacade.deleteOrder( id );
   }
 
 }

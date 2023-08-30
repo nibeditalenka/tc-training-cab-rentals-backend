@@ -10,8 +10,8 @@ import lombok.Setter;
 @Setter
 public class OrderOutput {
   private UUID id;
-  private String city;
-  private String carName;
+  private CarOutput car;
+  private CenterOutput center;
   private LocalDateTime pickUpOrder;
   private LocalDateTime returnDate;
 }

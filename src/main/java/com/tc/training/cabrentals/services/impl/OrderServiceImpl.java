@@ -1,6 +1,8 @@
 package com.tc.training.cabrentals.services.impl;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -23,5 +25,15 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public List<Order> getAll() {
     return orderRepository.findAll();
+  }
+
+  @Override
+  public Optional<Order> getById( UUID id ) {
+    return orderRepository.findById( id );
+  }
+
+  @Override
+  public void deleteById( final UUID id ) {
+    orderRepository.deleteById( id );
   }
 }

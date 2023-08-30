@@ -32,29 +32,25 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter {
       final FilterChain filterChain ) throws ServletException, IOException {
     HttpMethod method = HttpMethod.valueOf( request.getMethod() );
     String uri = request.getRequestURI();
-    if( true ) {
+    String token = request.getHeader( HttpHeaders.AUTHORIZATION );
+    if( method.equals( HttpMethod.OPTIONS ) ) {
       filterChain.doFilter( request, response );
     } else {
-      String token = request.getHeader( HttpHeaders.AUTHORIZATION );
-
-      if( method.equals( HttpMethod.OPTIONS ) ) {
-        filterChain.doFilter( request, response );
-      } else {
-        if( StringUtils.hasLength( token ) && ( token.startsWith( "Bearer" ) ) ) {
-          String actualToken = token.split( " " )[1].trim();
-          if( StringUtils.hasLength( actualToken ) ) {
-            try {
-              FirebaseToken firebaseToken = FirebaseAuth.getInstance().verifyIdToken( actualToken );
-              String firebaseId = firebaseToken.getUid();
-              User user = userService.getByFirebaseId( firebaseId );
-              CurrentUser.set( user );
-            } catch( FirebaseAuthException e ) {
-              throw new RuntimeException( e );
-            }
+      if( StringUtils.hasText( token ) && ( token.startsWith( "Bearer" ) ) ) {
+        String actualToken = token.split( " " )[1].trim();
+        if( StringUtils.hasLength( actualToken ) ) {
+          try {
+            FirebaseToken firebaseToken = FirebaseAuth.getInstance().verifyIdToken( actualToken );
+            String firebaseId = firebaseToken.getUid();
+            User user = userService.getByFirebaseId( firebaseId );
+            CurrentUser.set( user );
+          } catch( FirebaseAuthException e ) {
+            throw new RuntimeException( e );
           }
         }
-
       }
+
     }
   }
 }
+
