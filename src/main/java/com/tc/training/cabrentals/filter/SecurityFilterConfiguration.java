@@ -47,18 +47,22 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter {
             String firebaseId = firebaseToken.getUid();
             User user = userService.getByFirebaseId( firebaseId );
             CurrentUser.set( user );
+            filterChain.doFilter( request, response );
           } catch( FirebaseAuthException e ) {
             throw new RuntimeException( e );
           }
         }
       }
     }
+    response.setHeader( "Access-Control-Allow-Origin", "*" );
+    response.setHeader( "Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE" );
+    response.setHeader( "Access-Control-Allow-Headers",
+        "X-Requested-With,Origin,Content-Type, Accept, x-device-user-agent, Content-Type" );
   }
 
   @Override
   protected boolean shouldNotFilter( final HttpServletRequest request ) throws ServletException {
-    List<Map<String, Object>> publicApis = List.of(
-        Map.of( "url", "/swagger-ui/index.html", "method", RequestMethod.GET ) );
+    List<Map<String, Object>> publicApis = List.of( Map.of( "url", "/users/login", "method", RequestMethod.POST ) );
 
     String requestURI = request.getRequestURI();
     RequestMethod requestMethod = RequestMethod.valueOf( request.getMethod() );
