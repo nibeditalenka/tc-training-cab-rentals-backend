@@ -40,7 +40,7 @@ public class UserFacadeIml implements UserFacade {
   private final FirebaseUserService firebaseUserService;
   @Value( "${firebase.api-key}" )
   private String firebaseApiKey;
-  @Value( "${firebase.accounts.url}" )
+  @Value( "${firebase.accounts-url}" )
   private String firebaseUrl;
 
   @Override

@@ -36,12 +36,12 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter {
     HttpMethod method = HttpMethod.valueOf( request.getMethod() );
     String uri = request.getRequestURI();
     String token = request.getHeader( HttpHeaders.AUTHORIZATION );
-    if( true ) {
+    if( method.equals( HttpMethod.OPTIONS ) || !StringUtils.hasText( token ) ) {
       filterChain.doFilter( request, response );
     } else {
-      if( StringUtils.hasText( token ) && ( token.startsWith( "Bearer" ) ) ) {
+      if( StringUtils.hasText( token ) && ( token.startsWith( "Bearer " ) ) ) {
         String actualToken = token.split( " " )[1].trim();
-        if( StringUtils.hasLength( actualToken ) ) {
+        if( StringUtils.hasText( actualToken ) ) {
           try {
             FirebaseToken firebaseToken = FirebaseAuth.getInstance().verifyIdToken( actualToken );
             String firebaseId = firebaseToken.getUid();
