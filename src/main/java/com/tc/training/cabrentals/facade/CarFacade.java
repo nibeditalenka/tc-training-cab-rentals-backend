@@ -19,7 +19,7 @@ public interface CarFacade {
 
   PageOutput<CarOutput> getAllCar( Integer pageNumber, Integer pageSize, String sortBy, Sort.Direction sortDirection,
       String query, String type, String model, String seater, String mileage, Float minPrice, Float maxPrice, Gear gear,
-      Integer tripCount, Float averageRatings, UUID centerId );
+      Integer tripCount, Float averageRatings, CarStatus status, UUID centerId );
 
   CarOutput getCarById( UUID id );
 }
