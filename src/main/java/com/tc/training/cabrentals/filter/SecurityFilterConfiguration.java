@@ -36,7 +36,7 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter {
     HttpMethod method = HttpMethod.valueOf( request.getMethod() );
     String uri = request.getRequestURI();
     String token = request.getHeader( HttpHeaders.AUTHORIZATION );
-    if( method.equals( HttpMethod.OPTIONS ) || !StringUtils.hasText( token ) ) {
+    if( true ) {
       filterChain.doFilter( request, response );
     } else {
       if( StringUtils.hasText( token ) && ( token.startsWith( "Bearer" ) ) ) {
@@ -54,12 +54,6 @@ public class SecurityFilterConfiguration extends OncePerRequestFilter {
         }
       }
     }
-    response.setHeader( "Access-Control-Allow-Origin", "*" );
-    response.setHeader( "Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE" );
-    response.setHeader( "Access-Control-Max-Age", "3600" );
-    response.setHeader( "Access-Control-Allow-Headers",
-        "X-Requested-With,Origin,Content-Type, Accept, x-device-user-agent, Content-Type" );
-
   }
 
   @Override
