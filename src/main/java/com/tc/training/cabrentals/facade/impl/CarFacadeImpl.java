@@ -13,6 +13,7 @@ import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.entities.Car;
 import com.tc.training.cabrentals.entities.Center;
 import com.tc.training.cabrentals.enums.CarStatus;
+import com.tc.training.cabrentals.enums.FuelType;
 import com.tc.training.cabrentals.enums.Gear;
 import com.tc.training.cabrentals.facade.CarFacade;
 import com.tc.training.cabrentals.services.CarService;
@@ -59,9 +60,9 @@ public class CarFacadeImpl implements CarFacade {
   public PageOutput<CarOutput> getAllCar( Integer pageNumber, Integer pageSize, String sortBy,
       Sort.Direction sortDirection, String query, String type, String model, String seater, String mileage,
       Float minPrice, Float maxPrice, Gear gear, Integer tripCount, Float averageRatings, CarStatus status,
-      UUID centerId ) {
+      FuelType fuelType, UUID centerId ) {
     Page<Car> carPage = carService.getAllCars( pageNumber, pageSize, sortBy, sortDirection, query, type, model, seater,
-        mileage, minPrice, maxPrice, gear, tripCount, averageRatings, status, centerId );
+        mileage, minPrice, maxPrice, gear, tripCount, averageRatings, status, fuelType, centerId );
     return AppUtils.convertPageToPageOutput( carPage, CarOutput.class );
   }
 

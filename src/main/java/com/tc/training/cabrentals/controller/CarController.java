@@ -17,6 +17,7 @@ import com.tc.training.cabrentals.dto.CarInput;
 import com.tc.training.cabrentals.dto.CarOutput;
 import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.enums.CarStatus;
+import com.tc.training.cabrentals.enums.FuelType;
 import com.tc.training.cabrentals.enums.Gear;
 import com.tc.training.cabrentals.facade.CarFacade;
 
@@ -55,9 +56,9 @@ public class CarController {
       @RequestParam( required = false ) Float maxPrice, @RequestParam( required = false ) Gear gear,
       @RequestParam( required = false ) Integer tripCount, @RequestParam( required = false ) Float averageRatings,
       @RequestParam( required = false, defaultValue = "AVAILABLE" ) CarStatus status,
-      @RequestParam( required = false ) UUID centerId ) {
+      @RequestParam( required = false ) FuelType fuelType, @RequestParam( required = false ) UUID centerId ) {
     return carFacade.getAllCar( pageNumber, pageSize, sortBy, sortDirection, query, type, model, seater, mileage,
-        minPrice, maxPrice, gear, tripCount, averageRatings, status, centerId );
+        minPrice, maxPrice, gear, tripCount, averageRatings, status, fuelType, centerId );
   }
 
   @GetMapping( "/{id}" )

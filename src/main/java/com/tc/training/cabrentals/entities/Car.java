@@ -5,6 +5,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.tc.training.cabrentals.enums.CarStatus;
+import com.tc.training.cabrentals.enums.FuelType;
 import com.tc.training.cabrentals.enums.Gear;
 
 import lombok.Data;
@@ -26,6 +27,7 @@ public class Car extends BaseEntity {
   private Float averageRatings;
   private String image;
   private Gear gear;
+  private FuelType fuelType;
   @ManyToOne
   @JoinColumn( name = "order_id" ) // This assumes you have a column named "order_id" in the cars table
   private Order order;

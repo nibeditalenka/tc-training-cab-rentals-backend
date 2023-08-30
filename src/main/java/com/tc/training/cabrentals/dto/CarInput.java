@@ -2,6 +2,7 @@ package com.tc.training.cabrentals.dto;
 
 import java.util.UUID;
 
+import com.tc.training.cabrentals.enums.FuelType;
 import com.tc.training.cabrentals.enums.Gear;
 
 import lombok.AllArgsConstructor;
@@ -22,4 +23,5 @@ public class CarInput {
   private String image;
   private UUID centerId;
   private Gear gear;
+  private FuelType fuelType;
 }
