@@ -80,13 +80,15 @@ public class CarServiceImpl implements CarService {
 
     booleanBuilder.and( qCar.carStatus.eq( status ) );
 
-    QOrder qOrder = QOrder.order;
+    if( pickUpDateTime != null && returnDateTime != null ) {
+      QOrder qOrder = QOrder.order;
 
-    Predicate notOverlappingOrderExists = ExpressionUtils.allOf( qOrder.car.eq( qCar ),
-        qOrder.orderStatus.in( OrderStatus.INITIALIZE, OrderStatus.PICKUP, OrderStatus.ON_ROAD ),
-        qOrder.pickUpDate.before( returnDateTime ), qOrder.returnDate.after( pickUpDateTime ) );
+      Predicate notOverlappingOrderExists = ExpressionUtils.allOf( qOrder.car.eq( qCar ),
+          qOrder.orderStatus.in( OrderStatus.INITIALIZE, OrderStatus.PICKUP, OrderStatus.ON_ROAD ),
+          qOrder.pickUpDate.before( returnDateTime ), qOrder.returnDate.after( pickUpDateTime ) );
 
-    booleanBuilder.and( QCar.car.ne( (Car) JPAExpressions.selectFrom( qOrder ).where( notOverlappingOrderExists ) ) );
+      booleanBuilder.and( QCar.car.ne( (Car) JPAExpressions.selectFrom( qOrder ).where( notOverlappingOrderExists ) ) );
+    }
 
     PageRequest pageRequest = PageRequest.of( pageNumber, pageSize, Sort.by( sortDirection, sortBy ) );
     return carRepository.findAll( booleanBuilder, pageRequest );

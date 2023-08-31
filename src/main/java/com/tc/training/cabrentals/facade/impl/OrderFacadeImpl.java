@@ -6,8 +6,6 @@ import java.util.UUID;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import com.tc.training.cabrentals.dto.CarOutput;
-import com.tc.training.cabrentals.dto.CenterOutput;
 import com.tc.training.cabrentals.dto.OrderInput;
 import com.tc.training.cabrentals.dto.OrderOutput;
 import com.tc.training.cabrentals.entities.Car;
@@ -31,16 +29,14 @@ public class OrderFacadeImpl implements OrderFacade {
   @Override
   public OrderOutput placeOrder( OrderInput input ) {
     Order order = modelMapper.map( input, Order.class );
-    order.setOrderStatus( OrderStatus.PENDING );
+
+    order.setOrderStatus( OrderStatus.INITIALIZE );
     Car car = carService.getCarById( input.getCarId() );
     order.setCar( car );
-    order.setPrice( car.getPrice() );
     order.setUser( CurrentUser.get() );
+
     order = orderService.createOrUpdate( order );
-    OrderOutput orderOutput = modelMapper.map( order, OrderOutput.class );
-    orderOutput.setCenter( modelMapper.map( order.getCar().getCenter(), CenterOutput.class ) );
-    orderOutput.setCar( modelMapper.map( order.getCar(), CarOutput.class ) );
-    return orderOutput;
+    return modelMapper.map( order, OrderOutput.class );
   }
 
   @Override
