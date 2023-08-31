@@ -16,4 +16,5 @@ public class OrderOutput {
   private LocalDateTime returnDate;
   private Float gst;
   private Float totalPrice;
+  private PaymentOutput payment;
 }

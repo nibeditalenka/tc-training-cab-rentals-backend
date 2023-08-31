@@ -19,4 +19,6 @@ public interface OrderFacade {
   OrderOutput getById( UUID id );
 
   List<OrderOutput> getByStatus( OrderStatus status );
+
+  OrderOutput updateStatus( UUID id, OrderStatus orderStatus );
 }

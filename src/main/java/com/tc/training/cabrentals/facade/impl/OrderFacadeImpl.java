@@ -71,4 +71,15 @@ public class OrderFacadeImpl implements OrderFacade {
     List<Order> orders = orderService.getByStatus( status );
     return orders.stream().map( order -> modelMapper.map( order, OrderOutput.class ) ).toList();
   }
+
+  @Override
+  public OrderOutput updateStatus( final UUID id, final OrderStatus orderStatus ) {
+    Order order = orderService.getById( id )
+        .orElseThrow( () -> new ResourceNotFoundException( "Order not found with id " + id ) );
+    if( orderStatus.equals( OrderStatus.INITIALIZE ) || orderStatus.equals( OrderStatus.CONFIRMED ) ) {
+      throw new ResourceNotFoundException( "Invalid access" );
+    }
+    order.setOrderStatus( orderStatus );
+    return modelMapper.map( orderService.createOrUpdate( order ), OrderOutput.class );
+  }
 }
