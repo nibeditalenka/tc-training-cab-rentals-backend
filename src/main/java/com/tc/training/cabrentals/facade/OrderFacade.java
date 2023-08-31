@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.tc.training.cabrentals.dto.OrderInput;
 import com.tc.training.cabrentals.dto.OrderOutput;
+import com.tc.training.cabrentals.enums.OrderStatus;
 
 public interface OrderFacade {
   OrderOutput placeOrder( OrderInput input );
@@ -16,4 +17,6 @@ public interface OrderFacade {
   void deleteOrder( UUID id );
 
   OrderOutput getById( UUID id );
+
+  List<OrderOutput> getByStatus( OrderStatus status );
 }

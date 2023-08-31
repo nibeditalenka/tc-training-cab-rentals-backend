@@ -1,5 +1,6 @@
 package com.tc.training.cabrentals.services.impl;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -39,7 +40,8 @@ public class CarServiceImpl implements CarService {
   @Override
   public Page<Car> getAllCars( Integer pageNumber, Integer pageSize, String sortBy, Sort.Direction sortDirection,
       String query, String type, String model, String seater, String mileage, Float minPrice, Float maxPrice, Gear gear,
-      Integer tripCount, Float averageRatings, CarStatus status, FuelType fuelType, UUID centerId ) {
+      Integer tripCount, Float averageRatings, CarStatus status, FuelType fuelType, UUID centerId,
+      LocalDateTime pickUpDateTime, LocalDateTime returnDateTime ) {
 
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     if( StringUtils.hasText( type ) ) {

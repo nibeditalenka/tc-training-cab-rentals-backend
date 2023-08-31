@@ -2,6 +2,7 @@ package com.tc.training.cabrentals.dto;
 
 import java.util.UUID;
 
+import com.tc.training.cabrentals.enums.CarStatus;
 import com.tc.training.cabrentals.enums.FuelType;
 import com.tc.training.cabrentals.enums.Gear;
 
@@ -21,4 +22,5 @@ public class CarOutput {
   private String plateNumber;
   private Gear gear;
   private FuelType fuelType;
+  private CarStatus carStatus;
 }

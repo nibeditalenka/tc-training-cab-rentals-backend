@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.tc.training.cabrentals.entities.Order;
+import com.tc.training.cabrentals.enums.OrderStatus;
 import com.tc.training.cabrentals.repositories.OrderRepository;
 import com.tc.training.cabrentals.services.OrderService;
 
@@ -18,7 +19,7 @@ public class OrderServiceImpl implements OrderService {
   private final OrderRepository orderRepository;
 
   @Override
-  public Order create( Order order ) {
+  public Order createOrUpdate( Order order ) {
     return orderRepository.save( order );
   }
 
@@ -35,5 +36,15 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public void deleteById( final UUID id ) {
     orderRepository.deleteById( id );
+  }
+
+  @Override
+  public Order updateById( final UUID id, final Order order ) {
+    return null;
+  }
+
+  @Override
+  public List<Order> getByStatus( final OrderStatus status ) {
+    return orderRepository.findOrdersByOrderStatus( status );
   }
 }

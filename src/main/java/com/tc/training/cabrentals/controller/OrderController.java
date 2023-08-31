@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tc.training.cabrentals.dto.OrderInput;
 import com.tc.training.cabrentals.dto.OrderOutput;
+import com.tc.training.cabrentals.enums.OrderStatus;
 import com.tc.training.cabrentals.facade.OrderFacade;
 
 import lombok.RequiredArgsConstructor;
@@ -47,6 +49,11 @@ public class OrderController {
   @DeleteMapping( "/{id}" )
   public void deleteOrderById( @PathVariable UUID id ) {
     orderFacade.deleteOrder( id );
+  }
+
+  @GetMapping( "/order_status" )
+  public List<OrderOutput> getByStatus( @RequestParam OrderStatus status ) {
+    return orderFacade.getByStatus( status );
   }
 
 }

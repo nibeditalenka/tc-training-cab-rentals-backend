@@ -35,9 +35,8 @@ public class OrderFacadeImpl implements OrderFacade {
     Car car = carService.getCarById( input.getCarId() );
     order.setCar( car );
     order.setPrice( car.getPrice() );
-
     order.setUser( CurrentUser.get() );
-    order = orderService.create( order );
+    order = orderService.createOrUpdate( order );
     OrderOutput orderOutput = modelMapper.map( order, OrderOutput.class );
     orderOutput.setCenter( modelMapper.map( order.getCar().getCenter(), CenterOutput.class ) );
     orderOutput.setCar( modelMapper.map( order.getCar(), CarOutput.class ) );
@@ -52,7 +51,11 @@ public class OrderFacadeImpl implements OrderFacade {
 
   @Override
   public OrderOutput updateOrder( UUID id, OrderInput input ) {
-    return null;
+    Order order = modelMapper.map( input, Order.class );
+    order.setUser( CurrentUser.get() );
+    Order orderById = orderService.getById( id )
+        .orElseThrow( () -> new ResourceNotFoundException( "Order is not found in this id" ) );
+    return modelMapper.map( orderById, OrderOutput.class );
   }
 
   @Override
@@ -65,5 +68,11 @@ public class OrderFacadeImpl implements OrderFacade {
     Order order = orderService.getById( id )
         .orElseThrow( () -> new ResourceNotFoundException( "Order is not found with this id" ) );
     return modelMapper.map( order, OrderOutput.class );
+  }
+
+  @Override
+  public List<OrderOutput> getByStatus( final OrderStatus status ) {
+    List<Order> orders = orderService.getByStatus( status );
+    return orders.stream().map( order -> modelMapper.map( order, OrderOutput.class ) ).toList();
   }
 }
