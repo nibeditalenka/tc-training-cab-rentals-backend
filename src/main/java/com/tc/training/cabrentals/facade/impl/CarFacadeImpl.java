@@ -2,7 +2,9 @@ package com.tc.training.cabrentals.facade.impl;
 
 import java.util.UUID;
 
+import org.modelmapper.Conditions;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -51,7 +53,9 @@ public class CarFacadeImpl implements CarFacade {
   @Override
   public CarOutput updateCar( UUID id, CarInput carInput ) {
     Car carUpdate = carService.getCarById( id );
-    carUpdate = modelMapper.map( carInput, Car.class );
+    modelMapper.getConfiguration().setMatchingStrategy( MatchingStrategies.STRICT )
+        .setPropertyCondition( Conditions.isNotNull() );
+    modelMapper.map( carInput, carUpdate );
     carUpdate = carService.createOrUpdate( carUpdate );
     return modelMapper.map( carUpdate, CarOutput.class );
   }
