@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import com.querydsl.core.BooleanBuilder;
 import com.tc.training.cabrentals.entities.Car;
 import com.tc.training.cabrentals.entities.QCar;
+import com.tc.training.cabrentals.entities.QOrder;
 import com.tc.training.cabrentals.enums.CarStatus;
 import com.tc.training.cabrentals.enums.FuelType;
 import com.tc.training.cabrentals.enums.Gear;
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CarServiceImpl implements CarService {
   private static final QCar qCar = QCar.car;
+  private static final QOrder qOrder = QOrder.order;
 
   private final CarRepository carRepository;
 

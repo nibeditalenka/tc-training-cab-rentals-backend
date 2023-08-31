@@ -26,7 +26,7 @@ public class Car extends BaseEntity {
   private String mileage;
   private Float price;
   private Integer tripCount;
-  private Float averageRatings;
+  private Float averageRatings = 0.0F;
   private String image;
   private Gear gear;
   private FuelType fuelType;

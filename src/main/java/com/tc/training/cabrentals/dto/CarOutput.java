@@ -23,4 +23,5 @@ public class CarOutput {
   private Gear gear;
   private FuelType fuelType;
   private CarStatus carStatus;
+  private Float averageRatings;
 }
