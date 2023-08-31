@@ -38,6 +38,7 @@ public class CarFacadeImpl implements CarFacade {
     final Center center = centerService.getById( carInput.getCenterId() );
     car.setCenter( center );
     car.setTripCount( 0 );
+    car.setAverageRatings( 0.0f );
     car.setCarStatus( CarStatus.AVAILABLE );
     car = carService.createOrUpdate( car );
     return modelMapper.map( car, CarOutput.class );
