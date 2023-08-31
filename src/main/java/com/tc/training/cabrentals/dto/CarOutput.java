@@ -24,4 +24,5 @@ public class CarOutput {
   private FuelType fuelType;
   private CarStatus carStatus;
   private Float averageRatings;
+  private CenterOutput center;
 }
