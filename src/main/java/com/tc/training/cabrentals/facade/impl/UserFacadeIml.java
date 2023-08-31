@@ -29,6 +29,7 @@ import com.tc.training.cabrentals.facade.UserFacade;
 import com.tc.training.cabrentals.services.FirebaseUserService;
 import com.tc.training.cabrentals.services.UserService;
 import com.tc.training.cabrentals.utils.AppUtils;
+import com.tc.training.cabrentals.utils.CurrentUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -103,6 +104,11 @@ public class UserFacadeIml implements UserFacade {
     User user = userService.getByFirebaseId( firebaseTokenOutput.getLocalId() );
     logInOutput.setUser( modelMapper.map( user, UserOutput.class ) );
     return logInOutput;
+  }
+
+  @Override
+  public UserOutput getMe() {
+    return modelMapper.map( CurrentUser.get(), UserOutput.class );
   }
 
 }

@@ -21,4 +21,7 @@ public interface UserFacade {
   UserOutput doSignup( UserInput input );
 
   LogInOutput doLogin( LoginInput input );
+
+  UserOutput getMe();
+
 }
