@@ -3,6 +3,8 @@ package com.tc.training.cabrentals.controller;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +29,7 @@ public class OrderController {
   private final OrderFacade orderFacade;
 
   @PostMapping
-  public OrderOutput placeOrder( @RequestBody OrderInput input ) {
+  public OrderOutput placeOrder( @RequestBody @Valid OrderInput input ) {
     return orderFacade.placeOrder( input );
   }
 

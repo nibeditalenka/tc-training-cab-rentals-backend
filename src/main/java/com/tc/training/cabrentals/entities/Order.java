@@ -18,9 +18,16 @@ public class Order extends BaseEntity {
   private LocalDateTime pickUpDate;
   private LocalDateTime returnDate;
   private OrderStatus orderStatus;
+  private Float price;
+  private Float totalPrice;
+  private Float gst;
+
   @ManyToOne
   private User user;
-  @OneToOne
+
+  @ManyToOne
   private Car car;
-  private Float price;
+
+  @OneToOne
+  private Payment payment;
 }

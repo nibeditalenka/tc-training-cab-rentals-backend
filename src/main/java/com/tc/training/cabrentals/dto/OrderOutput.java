@@ -12,7 +12,8 @@ public class OrderOutput {
   private UUID id;
   private Float price;
   private CarOutput car;
-  private CenterOutput center;
   private LocalDateTime pickUpOrder;
   private LocalDateTime returnDate;
+  private Float gst;
+  private Float totalPrice;
 }

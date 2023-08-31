@@ -41,6 +41,12 @@ public class GlobalExceptionHandler {
     return errorBuilder( exception );
   }
 
+  @ExceptionHandler( RuntimeException.class )
+  @ResponseStatus( HttpStatus.BAD_REQUEST )
+  public ErrorDetails handleRunTime( final RuntimeException exception ) {
+    return errorBuilder( exception );
+  }
+
   public ErrorDetails errorBuilder( final Exception exception ) {
     log.error( "{} - {}", exception.getClass().getSimpleName(), exception.getMessage() );
     return new ErrorDetails( exception.getMessage() );
