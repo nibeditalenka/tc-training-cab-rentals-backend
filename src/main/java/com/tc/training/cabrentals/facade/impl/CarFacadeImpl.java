@@ -66,7 +66,10 @@ public class CarFacadeImpl implements CarFacade {
   public PageOutput<CarOutput> getAllCar( Integer pageNumber, Integer pageSize, String sortBy,
       Sort.Direction sortDirection, String query, String type, String model, String seater, String mileage,
       Float minPrice, Float maxPrice, Gear gear, Integer tripCount, Float averageRatings, CarStatus status,
-      FuelType fuelType, UUID centerId, LocalDateTime pickUpDateTime, LocalDateTime returnDateTime ) {
+      FuelType fuelType, UUID centerId, String startDateTime, String dropDateTime ) {
+    LocalDateTime pickUpDateTime = LocalDateTime.parse( startDateTime );
+    LocalDateTime returnDateTime = LocalDateTime.parse( dropDateTime );
+
     Page<Car> carPage = carService.getAllCars( pageNumber, pageSize, sortBy, sortDirection, query, type, model, seater,
         mileage, minPrice, maxPrice, gear, tripCount, averageRatings, status, fuelType, centerId, pickUpDateTime,
         returnDateTime );

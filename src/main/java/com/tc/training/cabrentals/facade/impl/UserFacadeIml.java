@@ -16,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.firebase.auth.UserRecord;
 import com.google.gson.Gson;
+import com.tc.training.cabrentals.constants.EmailTemplateConstants;
 import com.tc.training.cabrentals.dto.FirebaseTokenOutput;
 import com.tc.training.cabrentals.dto.LogInOutput;
 import com.tc.training.cabrentals.dto.LoginInput;
@@ -28,6 +29,7 @@ import com.tc.training.cabrentals.enums.Role;
 import com.tc.training.cabrentals.exception.ResourceNotFoundException;
 import com.tc.training.cabrentals.facade.UserFacade;
 import com.tc.training.cabrentals.services.CenterService;
+import com.tc.training.cabrentals.services.EmailService;
 import com.tc.training.cabrentals.services.FirebaseUserService;
 import com.tc.training.cabrentals.services.UserService;
 import com.tc.training.cabrentals.utils.AppUtils;
@@ -42,6 +44,7 @@ public class UserFacadeIml implements UserFacade {
   private final ModelMapper modelMapper;
   private final FirebaseUserService firebaseUserService;
   private final CenterService centerService;
+  private final EmailService emailService;
 
   @Value( "${firebase.api-key}" )
   private String firebaseApiKey;
@@ -84,9 +87,12 @@ public class UserFacadeIml implements UserFacade {
     user.setRole( Role.END_USER );
     UserRecord userRecord = firebaseUserService.createUser( input );
     user.setFirebaseId( userRecord.getUid() );
-    User add = userService.createOrUpdate( user );
-    String verificationLink = firebaseUserService.getVerificationLink( add.getEmail() );
-    return modelMapper.map( add, UserOutput.class );
+    user = userService.createOrUpdate( user );
+    String verificationLink = firebaseUserService.getVerificationLink( user.getEmail() );
+    String emailVerificationTemplate = EmailTemplateConstants.EmailVerificationTemplate;
+    String finalBody = emailVerificationTemplate.formatted( user.getName(), verificationLink );
+    emailService.sendEmail( user.getEmail(), "Account verification", finalBody );
+    return modelMapper.map( user, UserOutput.class );
   }
 
   @Override

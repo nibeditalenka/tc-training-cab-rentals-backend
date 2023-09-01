@@ -1,6 +1,5 @@
 package com.tc.training.cabrentals.facade;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.data.domain.Sort;
@@ -21,8 +20,8 @@ public interface CarFacade {
 
   PageOutput<CarOutput> getAllCar( Integer pageNumber, Integer pageSize, String sortBy, Sort.Direction sortDirection,
       String query, String type, String model, String seater, String mileage, Float minPrice, Float maxPrice, Gear gear,
-      Integer tripCount, Float averageRatings, CarStatus status, FuelType fuelType, UUID centerId,
-      LocalDateTime pickUpDateTime, LocalDateTime returnDateTime );
+      Integer tripCount, Float averageRatings, CarStatus status, FuelType fuelType, UUID centerId, String startDateTime,
+      String dropDateTime );
 
   CarOutput getCarById( UUID id );
 }

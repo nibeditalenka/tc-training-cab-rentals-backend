@@ -1,6 +1,5 @@
 package com.tc.training.cabrentals.controller;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.data.domain.Sort;
@@ -58,11 +57,9 @@ public class CarController {
       @RequestParam( required = false ) Integer tripCount, @RequestParam( required = false ) Float averageRatings,
       @RequestParam( required = false, defaultValue = "AVAILABLE" ) CarStatus status,
       @RequestParam( required = false ) FuelType fuelType, @RequestParam( required = false ) UUID centerId,
-      @RequestParam( required = false ) LocalDateTime pickUpDateTime,
-      @RequestParam( required = false ) LocalDateTime returnDateTime ) {
+      @RequestParam( required = false ) String startDateTime, @RequestParam( required = false ) String dropDateTime ) {
     return carFacade.getAllCar( pageNumber, pageSize, sortBy, sortDirection, query, type, model, seater, mileage,
-        minPrice, maxPrice, gear, tripCount, averageRatings, status, fuelType, centerId, pickUpDateTime,
-        returnDateTime );
+        minPrice, maxPrice, gear, tripCount, averageRatings, status, fuelType, centerId, startDateTime, dropDateTime );
   }
 
   @GetMapping( "/{id}" )
