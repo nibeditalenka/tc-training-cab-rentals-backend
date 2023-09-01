@@ -1,6 +1,5 @@
 package com.tc.training.cabrentals.facade.impl;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.modelmapper.Conditions;
@@ -67,12 +66,11 @@ public class CarFacadeImpl implements CarFacade {
       Sort.Direction sortDirection, String query, String type, String model, String seater, String mileage,
       Float minPrice, Float maxPrice, Gear gear, Integer tripCount, Float averageRatings, CarStatus status,
       FuelType fuelType, UUID centerId, String startDateTime, String dropDateTime ) {
-    LocalDateTime pickUpDateTime = LocalDateTime.parse( startDateTime );
-    LocalDateTime returnDateTime = LocalDateTime.parse( dropDateTime );
+    //LocalDateTime pickUpDateTime = LocalDateTime.parse( startDateTime );
+    //LocalDateTime returnDateTime = LocalDateTime.parse( dropDateTime );
 
     Page<Car> carPage = carService.getAllCars( pageNumber, pageSize, sortBy, sortDirection, query, type, model, seater,
-        mileage, minPrice, maxPrice, gear, tripCount, averageRatings, status, fuelType, centerId, pickUpDateTime,
-        returnDateTime );
+        mileage, minPrice, maxPrice, gear, tripCount, averageRatings, status, fuelType, centerId, null, null );
     return AppUtils.convertPageToPageOutput( carPage, CarOutput.class );
   }
 
