@@ -13,5 +13,5 @@ public interface CenterService {
   Center getById( UUID id );
 
   Page<Center> getAll( Integer pageNumber, Integer pageSize, String sortBy, Sort.Direction sortDirection, String name,
-      String city );
+      String city, final Boolean isActive );
 }

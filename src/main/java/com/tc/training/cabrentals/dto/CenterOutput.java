@@ -11,4 +11,5 @@ public class CenterOutput {
   private UUID id;
   private Address address;
   private String name;
+  private Boolean isActive = Boolean.TRUE;
 }

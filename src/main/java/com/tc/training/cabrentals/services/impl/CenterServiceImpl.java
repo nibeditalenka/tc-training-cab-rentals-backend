@@ -35,7 +35,7 @@ public class CenterServiceImpl implements CenterService {
 
   @Override
   public Page<Center> getAll( final Integer pageNumber, final Integer pageSize, final String sortBy,
-      final Sort.Direction sortDirection, final String name, final String city ) {
+      final Sort.Direction sortDirection, final String name, final String city, final Boolean isActive ) {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
 
     if( StringUtils.hasText( name ) ) {
@@ -43,6 +43,9 @@ public class CenterServiceImpl implements CenterService {
     }
     if( StringUtils.hasText( city ) ) {
       booleanBuilder.and( qCenter.address.city.startsWithIgnoreCase( city ) );
+    }
+    if( isActive != null ) {
+      booleanBuilder.and( qCenter.isActive.eq( isActive ) );
     }
     PageRequest pageRequest = PageRequest.of( pageNumber, pageSize, Sort.by( sortDirection, sortBy ) );
     return centerRepository.findAll( booleanBuilder, pageRequest );

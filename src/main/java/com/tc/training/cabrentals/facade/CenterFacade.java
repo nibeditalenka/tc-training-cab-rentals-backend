@@ -15,7 +15,7 @@ public interface CenterFacade {
   void delete( UUID id, CenterTransferDto centerTransferDto );
 
   PageOutput<CenterOutput> getAll( Integer pageNumber, Integer pageSize, String sortBy, Sort.Direction sortDirection,
-      String name, String city );
+      String name, String city, final Boolean isActive );
 
   CenterOutput getById( UUID id );
 

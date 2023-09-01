@@ -64,9 +64,9 @@ public class CenterFacadeImpl implements CenterFacade {
 
   @Override
   public PageOutput<CenterOutput> getAll( final Integer pageNumber, final Integer pageSize, final String sortBy,
-      final Sort.Direction sortDirection, final String name, final String city ) {
+      final Sort.Direction sortDirection, final String name, final String city, final Boolean isActive ) {
 
-    Page<Center> centerPage = centerService.getAll( pageNumber, pageSize, sortBy, sortDirection, name, city );
+    Page<Center> centerPage = centerService.getAll( pageNumber, pageSize, sortBy, sortDirection, name, city, isActive );
     return AppUtils.convertPageToPageOutput( centerPage, CenterOutput.class );
   }
 
