@@ -41,8 +41,10 @@ public class OrderController {
       @RequestParam( required = false, defaultValue = "25" ) Integer pageSize,
       @RequestParam( required = false, defaultValue = "orderedDate" ) String sortBy,
       @RequestParam( required = false, defaultValue = "DESC" ) Sort.Direction sortDirection,
-      @RequestParam( required = false ) LocalDate orderedDate ) {
-    return orderFacade.getAllFiltered( pageNumber, pageSize, sortBy, sortDirection );
+      @RequestParam( required = false ) LocalDate orderedDate, @RequestParam( required = false ) UUID centerId,
+      @RequestParam( required = false ) UUID userId, @RequestParam( required = false ) UUID carId ) {
+    return orderFacade.getAllFiltered( pageNumber, pageSize, sortBy, sortDirection, orderedDate, centerId, userId,
+        carId );
   }
 
   @GetMapping( "/{id}" )
