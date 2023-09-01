@@ -49,9 +49,10 @@ public class OrderFacadeImpl implements OrderFacade {
   @Override
   public PageOutput<OrderOutput> getAllFiltered( final Integer pageNumber, final Integer pageSize, final String sortBy,
       final Sort.Direction sortDirection, final LocalDate orderedDate, final UUID centerId, final UUID userId,
-      final UUID carId, final LocalDateTime startDateTime, final LocalDateTime dropDateTime ) {
+      final UUID carId, final LocalDateTime startDateTime, final LocalDateTime dropDateTime,
+      final OrderStatus orderStatus ) {
     Page<Order> orderPage = orderService.getAllFiltered( pageNumber, pageSize, sortBy, sortDirection, orderedDate,
-        centerId, userId, carId, startDateTime, dropDateTime );
+        centerId, userId, carId, startDateTime, dropDateTime, orderStatus );
     return AppUtils.convertPageToPageOutput( orderPage, OrderOutput.class );
   }
 

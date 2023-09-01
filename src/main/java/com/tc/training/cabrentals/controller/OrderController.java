@@ -2,7 +2,6 @@ package com.tc.training.cabrentals.controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -46,9 +45,10 @@ public class OrderController {
       @RequestParam( required = false ) LocalDate orderedDate, @RequestParam( required = false ) UUID centerId,
       @RequestParam( required = false ) UUID userId, @RequestParam( required = false ) UUID carId,
       @RequestParam( required = false ) @DateTimeFormat( iso = DateTimeFormat.ISO.DATE_TIME ) LocalDateTime startDateTime,
-      @RequestParam( required = false ) @DateTimeFormat( iso = DateTimeFormat.ISO.DATE_TIME ) LocalDateTime dropDateTime ) {
+      @RequestParam( required = false ) @DateTimeFormat( iso = DateTimeFormat.ISO.DATE_TIME ) LocalDateTime dropDateTime,
+      @RequestParam( required = false ) OrderStatus orderStatus ) {
     return orderFacade.getAllFiltered( pageNumber, pageSize, sortBy, sortDirection, orderedDate, centerId, userId,
-        carId, startDateTime, dropDateTime );
+        carId, startDateTime, dropDateTime, orderStatus );
   }
 
   @GetMapping( "/{id}" )
@@ -65,10 +65,4 @@ public class OrderController {
   public void deleteOrderById( @PathVariable UUID id ) {
     orderFacade.deleteOrder( id );
   }
-
-  @GetMapping( "/order_status" )
-  public List<OrderOutput> getByStatus( @RequestParam OrderStatus status ) {
-    return orderFacade.getByStatus( status );
-  }
-
 }

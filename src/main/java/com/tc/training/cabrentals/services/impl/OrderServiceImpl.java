@@ -34,7 +34,8 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public Page<Order> getAllFiltered( final Integer pageNumber, final Integer pageSize, final String sortBy,
       final Sort.Direction sortDirection, final LocalDate orderedDate, final UUID centerId, final UUID userId,
-      final UUID carId, final LocalDateTime startDateTime, final LocalDateTime dropDateTime ) {
+      final UUID carId, final LocalDateTime startDateTime, final LocalDateTime dropDateTime,
+      final OrderStatus orderStatus ) {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
 
     if( orderedDate != null ) {
@@ -54,6 +55,9 @@ public class OrderServiceImpl implements OrderService {
     }
     if( dropDateTime != null ) {
       booleanBuilder.and( qOrder.returnDate.eq( dropDateTime ) );
+    }
+    if( orderStatus != null ) {
+      booleanBuilder.and( qOrder.orderStatus.eq( orderStatus ) );
     }
     PageRequest pageRequest = PageRequest.of( pageNumber, pageSize, Sort.by( sortDirection, sortBy ) );
     return orderRepository.findAll( booleanBuilder, pageRequest );

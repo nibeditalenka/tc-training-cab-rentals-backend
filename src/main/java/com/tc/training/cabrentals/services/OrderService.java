@@ -17,7 +17,8 @@ public interface OrderService {
 
   Page<Order> getAllFiltered( final Integer pageNumber, final Integer pageSize, final String sortBy,
       final Sort.Direction sortDirection, final LocalDate orderedDate, final UUID centerId, final UUID userId,
-      final UUID carId, final LocalDateTime startDateTime, final LocalDateTime dropDateTime );
+      final UUID carId, final LocalDateTime startDateTime, final LocalDateTime dropDateTime,
+      final OrderStatus orderStatus );
 
   Optional<Order> getById( UUID id );
 
