@@ -10,16 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.ExpressionUtils;
-import com.querydsl.core.types.Predicate;
-import com.querydsl.jpa.JPAExpressions;
 import com.tc.training.cabrentals.entities.Car;
 import com.tc.training.cabrentals.entities.QCar;
 import com.tc.training.cabrentals.entities.QOrder;
 import com.tc.training.cabrentals.enums.CarStatus;
 import com.tc.training.cabrentals.enums.FuelType;
 import com.tc.training.cabrentals.enums.Gear;
-import com.tc.training.cabrentals.enums.OrderStatus;
 import com.tc.training.cabrentals.repositories.CarRepository;
 import com.tc.training.cabrentals.services.CarService;
 
@@ -47,7 +43,7 @@ public class CarServiceImpl implements CarService {
   public Page<Car> getAllCars( Integer pageNumber, Integer pageSize, String sortBy, Sort.Direction sortDirection,
       String query, String type, String model, String seater, String mileage, Float minPrice, Float maxPrice, Gear gear,
       Integer tripCount, Float averageRatings, CarStatus status, FuelType fuelType, UUID centerId,
-      LocalDateTime pickUpDateTime, LocalDateTime returnDateTime ) {
+      final LocalDateTime startDateTime, final LocalDateTime dropDateTime ) {
 
     BooleanBuilder booleanBuilder = new BooleanBuilder();
     if( StringUtils.hasText( type ) ) {
@@ -79,17 +75,6 @@ public class CarServiceImpl implements CarService {
     }
 
     booleanBuilder.and( qCar.carStatus.eq( status ) );
-
-    if( pickUpDateTime != null && returnDateTime != null ) {
-      QOrder qOrder = QOrder.order;
-
-      Predicate notOverlappingOrderExists = ExpressionUtils.allOf( qOrder.car.eq( qCar ),
-          qOrder.orderStatus.in( OrderStatus.INITIALIZE, OrderStatus.PICKUP, OrderStatus.ON_ROAD ),
-          qOrder.pickUpDate.before( returnDateTime ), qOrder.returnDate.after( pickUpDateTime ) );
-
-      booleanBuilder.and( QCar.car.ne( (Car) JPAExpressions.selectFrom( qOrder ).where( notOverlappingOrderExists ) ) );
-    }
-
     PageRequest pageRequest = PageRequest.of( pageNumber, pageSize, Sort.by( sortDirection, sortBy ) );
     return carRepository.findAll( booleanBuilder, pageRequest );
   }

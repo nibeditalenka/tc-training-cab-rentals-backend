@@ -23,4 +23,8 @@ public interface OrderService {
   Order updateById( UUID id, Order order );
 
   List<Order> getByStatus( OrderStatus status );
+
+  List<Order> getByCarId( UUID carId );
+
+  List<Order> getByCarId( UUID carId, List<OrderStatus> statuses );
 }

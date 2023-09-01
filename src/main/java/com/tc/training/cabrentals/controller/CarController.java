@@ -1,8 +1,10 @@
 package com.tc.training.cabrentals.controller;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,7 +59,8 @@ public class CarController {
       @RequestParam( required = false ) Integer tripCount, @RequestParam( required = false ) Float averageRatings,
       @RequestParam( required = false, defaultValue = "AVAILABLE" ) CarStatus status,
       @RequestParam( required = false ) FuelType fuelType, @RequestParam( required = false ) UUID centerId,
-      @RequestParam( required = false ) String startDateTime, @RequestParam( required = false ) String dropDateTime ) {
+      @RequestParam( required = false ) @DateTimeFormat( iso = DateTimeFormat.ISO.DATE_TIME ) LocalDateTime startDateTime,
+      @RequestParam( required = false ) @DateTimeFormat( iso = DateTimeFormat.ISO.DATE_TIME ) LocalDateTime dropDateTime ) {
     return carFacade.getAllCar( pageNumber, pageSize, sortBy, sortDirection, query, type, model, seater, mileage,
         minPrice, maxPrice, gear, tripCount, averageRatings, status, fuelType, centerId, startDateTime, dropDateTime );
   }

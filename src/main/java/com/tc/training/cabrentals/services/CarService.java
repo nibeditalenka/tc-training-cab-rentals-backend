@@ -19,5 +19,5 @@ public interface CarService {
   Page<Car> getAllCars( Integer pageNumber, Integer pageSize, String sortBy, Sort.Direction sortDirection, String query,
       String type, String model, String seater, String mileage, Float minPrice, Float maxPrice, Gear gear,
       Integer tripCount, Float averageRatings, CarStatus status, FuelType fuelType, UUID centerId,
-      LocalDateTime pickUpDateTime, LocalDateTime returnDateTime );
+      final LocalDateTime startDateTime, final LocalDateTime dropDateTime );
 }

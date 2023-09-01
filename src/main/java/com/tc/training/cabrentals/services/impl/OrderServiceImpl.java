@@ -57,4 +57,14 @@ public class OrderServiceImpl implements OrderService {
   public List<Order> getByStatus( final OrderStatus status ) {
     return orderRepository.findOrdersByOrderStatus( status );
   }
+
+  @Override
+  public List<Order> getByCarId( final UUID carId ) {
+    return null;
+  }
+
+  @Override
+  public List<Order> getByCarId( final UUID carId, List<OrderStatus> statuses ) {
+    return orderRepository.findByCar_IdAndOrderStatusNotIn( carId, statuses );
+  }
 }
