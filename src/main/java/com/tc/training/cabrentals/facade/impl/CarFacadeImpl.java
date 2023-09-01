@@ -78,19 +78,21 @@ public class CarFacadeImpl implements CarFacade {
         mileage, minPrice, maxPrice, gear, tripCount, averageRatings, status, fuelType, centerId, startDateTime,
         dropDateTime );
     PageOutput<CarOutput> carOutputPageOutput = AppUtils.convertPageToPageOutput( carPage, CarOutput.class );
-    List<CarOutput> content = carOutputPageOutput.getContent();
-    List<CarOutput> op = new ArrayList<>();
-    for( final CarOutput carOutput : content ) {
-      List<Order> byCarId = orderService.getByCarId( carOutput.getId(), List.of( OrderStatus.RETURNED ) );
-      boolean isConflict = false;
-      for( final Order order : byCarId ) {
-        isConflict = hasConflict( startDateTime, dropDateTime, order.getPickUpDate(), order.getReturnDate() );
+    if( startDateTime != null && dropDateTime != null ) {
+      List<CarOutput> content = carOutputPageOutput.getContent();
+      List<CarOutput> op = new ArrayList<>();
+      for( final CarOutput carOutput : content ) {
+        List<Order> byCarId = orderService.getByCarId( carOutput.getId(), List.of( OrderStatus.RETURNED ) );
+        boolean isConflict = false;
+        for( final Order order : byCarId ) {
+          isConflict = hasConflict( startDateTime, dropDateTime, order.getPickUpDate(), order.getReturnDate() );
+        }
+        if( !isConflict ) {
+          op.add( carOutput );
+        }
       }
-      if( !isConflict ) {
-        op.add( carOutput );
-      }
+      carOutputPageOutput.setContent( op );
     }
-    carOutputPageOutput.setContent( op );
     return carOutputPageOutput;
   }
 
