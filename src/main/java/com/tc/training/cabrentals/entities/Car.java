@@ -28,6 +28,7 @@ public class Car extends BaseEntity {
   private Integer tripCount;
   private Double averageRatings = 0.0;
   private Long numberOfRatings = 0L;
+  private Long numberOfTrips = 0L;
   private String image;
   private Gear gear;
   private FuelType fuelType;

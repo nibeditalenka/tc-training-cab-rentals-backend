@@ -8,15 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.tc.training.cabrentals.dto.OrderInput;
 import com.tc.training.cabrentals.dto.OrderOutput;
@@ -64,5 +56,10 @@ public class OrderController {
   @DeleteMapping( "/{id}" )
   public void deleteOrderById( @PathVariable UUID id ) {
     orderFacade.deleteOrder( id );
+  }
+
+  @PatchMapping( "{id}" )
+  public OrderOutput updateOrderStatus( @PathVariable UUID id, @RequestParam OrderStatus status ) {
+    return orderFacade.updateStatus( id, status );
   }
 }

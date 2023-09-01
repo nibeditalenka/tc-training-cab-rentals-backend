@@ -2,7 +2,6 @@ package com.tc.training.cabrentals.facade;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Sort;
@@ -25,8 +24,6 @@ public interface OrderFacade {
   void deleteOrder( UUID id );
 
   OrderOutput getById( UUID id );
-
-  List<OrderOutput> getByStatus( OrderStatus status );
 
   OrderOutput updateStatus( UUID id, OrderStatus orderStatus );
 }

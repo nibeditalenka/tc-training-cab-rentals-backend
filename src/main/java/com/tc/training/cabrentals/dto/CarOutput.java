@@ -25,5 +25,6 @@ public class CarOutput {
   private CarStatus carStatus;
   private Double averageRatings;
   private Long numberOfRatings;
+  private Long numberOfTrips;
   private CenterOutput center;
 }

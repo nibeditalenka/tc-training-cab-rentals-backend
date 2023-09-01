@@ -2,7 +2,6 @@ package com.tc.training.cabrentals.facade.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
@@ -78,17 +77,16 @@ public class OrderFacadeImpl implements OrderFacade {
   }
 
   @Override
-  public List<OrderOutput> getByStatus( final OrderStatus status ) {
-    List<Order> orders = orderService.getByStatus( status );
-    return orders.stream().map( order -> modelMapper.map( order, OrderOutput.class ) ).toList();
-  }
-
-  @Override
   public OrderOutput updateStatus( final UUID id, final OrderStatus orderStatus ) {
     Order order = orderService.getById( id )
         .orElseThrow( () -> new ResourceNotFoundException( "Order not found with id " + id ) );
     if( orderStatus.equals( OrderStatus.INITIALIZE ) || orderStatus.equals( OrderStatus.CONFIRMED ) ) {
       throw new ResourceNotFoundException( "Invalid access" );
+    }
+    if( orderStatus.equals( OrderStatus.RETURNED ) ) {
+      Car car = order.getCar();
+      car.setTripCount( car.getTripCount() + 1 );
+      carService.createOrUpdate( car );
     }
     order.setOrderStatus( orderStatus );
     return modelMapper.map( orderService.createOrUpdate( order ), OrderOutput.class );

@@ -12,7 +12,6 @@ import com.tc.training.cabrentals.enums.OrderStatus;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, UUID>, QuerydslPredicateExecutor<Order> {
-  List<Order> findOrdersByOrderStatus( OrderStatus status );
 
   List<Order> findByCar_IdAndOrderStatusNotIn( UUID carId, List<OrderStatus> statuses );
 
