@@ -15,4 +15,6 @@ public interface OrderRepository extends JpaRepository<Order, UUID>, QuerydslPre
   List<Order> findOrdersByOrderStatus( OrderStatus status );
 
   List<Order> findByCar_IdAndOrderStatusNotIn( UUID carId, List<OrderStatus> statuses );
+
+  List<Order> findByCar_Id( UUID carId );
 }

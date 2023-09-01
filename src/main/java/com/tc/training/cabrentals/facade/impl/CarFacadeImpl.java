@@ -44,7 +44,7 @@ public class CarFacadeImpl implements CarFacade {
     final Center center = centerService.getById( carInput.getCenterId() );
     car.setCenter( center );
     car.setTripCount( 0 );
-    car.setAverageRatings( 0.0f );
+    car.setAverageRatings( 0.0 );
     car.setCarStatus( CarStatus.AVAILABLE );
     car = carService.createOrUpdate( car );
     return modelMapper.map( car, CarOutput.class );
@@ -71,7 +71,7 @@ public class CarFacadeImpl implements CarFacade {
   @Override
   public PageOutput<CarOutput> getAllCar( Integer pageNumber, Integer pageSize, String sortBy,
       Sort.Direction sortDirection, String query, String type, String model, String seater, String mileage,
-      Float minPrice, Float maxPrice, Gear gear, Integer tripCount, Float averageRatings, CarStatus status,
+      Float minPrice, Float maxPrice, Gear gear, Integer tripCount, Double averageRatings, CarStatus status,
       FuelType fuelType, UUID centerId, LocalDateTime startDateTime, LocalDateTime dropDateTime ) {
 
     Page<Car> carPage = carService.getAllCars( pageNumber, pageSize, sortBy, sortDirection, query, type, model, seater,

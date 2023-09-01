@@ -28,5 +28,7 @@ public class Order extends BaseEntity {
   private Car car;
   @OneToOne
   private Payment payment;
+  @OneToOne
+  private Review review;
   private LocalDate orderedDate;
 }

@@ -56,7 +56,7 @@ public class CarController {
       @RequestParam( required = false ) String model, @RequestParam( required = false ) String seater,
       @RequestParam( required = false ) String mileage, @RequestParam( required = false ) Float minPrice,
       @RequestParam( required = false ) Float maxPrice, @RequestParam( required = false ) Gear gear,
-      @RequestParam( required = false ) Integer tripCount, @RequestParam( required = false ) Float averageRatings,
+      @RequestParam( required = false ) Integer tripCount, @RequestParam( required = false ) Double averageRatings,
       @RequestParam( required = false, defaultValue = "AVAILABLE" ) CarStatus status,
       @RequestParam( required = false ) FuelType fuelType, @RequestParam( required = false ) UUID centerId,
       @RequestParam( required = false ) @DateTimeFormat( iso = DateTimeFormat.ISO.DATE_TIME ) LocalDateTime startDateTime,

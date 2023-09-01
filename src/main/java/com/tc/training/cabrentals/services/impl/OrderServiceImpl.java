@@ -85,7 +85,7 @@ public class OrderServiceImpl implements OrderService {
 
   @Override
   public List<Order> getByCarId( final UUID carId ) {
-    return null;
+    return orderRepository.findByCar_Id( carId );
   }
 
   @Override

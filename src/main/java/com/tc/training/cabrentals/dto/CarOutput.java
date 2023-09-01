@@ -23,6 +23,7 @@ public class CarOutput {
   private Gear gear;
   private FuelType fuelType;
   private CarStatus carStatus;
-  private Float averageRatings;
+  private Double averageRatings;
+  private Long numberOfRatings;
   private CenterOutput center;
 }

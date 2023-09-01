@@ -21,7 +21,7 @@ public interface CarFacade {
 
   PageOutput<CarOutput> getAllCar( Integer pageNumber, Integer pageSize, String sortBy, Sort.Direction sortDirection,
       String query, String type, String model, String seater, String mileage, Float minPrice, Float maxPrice, Gear gear,
-      Integer tripCount, Float averageRatings, CarStatus status, FuelType fuelType, UUID centerId,
+      Integer tripCount, Double averageRatings, CarStatus status, FuelType fuelType, UUID centerId,
       LocalDateTime startDateTime, LocalDateTime dropDateTime );
 
   CarOutput getCarById( UUID id );
