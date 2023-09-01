@@ -1,6 +1,7 @@
 package com.tc.training.cabrentals.facade.impl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,9 +49,9 @@ public class OrderFacadeImpl implements OrderFacade {
   @Override
   public PageOutput<OrderOutput> getAllFiltered( final Integer pageNumber, final Integer pageSize, final String sortBy,
       final Sort.Direction sortDirection, final LocalDate orderedDate, final UUID centerId, final UUID userId,
-      final UUID carId ) {
+      final UUID carId, final LocalDateTime startDateTime, final LocalDateTime dropDateTime ) {
     Page<Order> orderPage = orderService.getAllFiltered( pageNumber, pageSize, sortBy, sortDirection, orderedDate,
-        centerId, userId, carId );
+        centerId, userId, carId, startDateTime, dropDateTime );
     return AppUtils.convertPageToPageOutput( orderPage, OrderOutput.class );
   }
 

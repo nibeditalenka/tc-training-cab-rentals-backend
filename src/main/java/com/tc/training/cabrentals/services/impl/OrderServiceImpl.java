@@ -1,6 +1,7 @@
 package com.tc.training.cabrentals.services.impl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
   @Override
   public Page<Order> getAllFiltered( final Integer pageNumber, final Integer pageSize, final String sortBy,
       final Sort.Direction sortDirection, final LocalDate orderedDate, final UUID centerId, final UUID userId,
-      final UUID carId ) {
+      final UUID carId, final LocalDateTime startDateTime, final LocalDateTime dropDateTime ) {
     BooleanBuilder booleanBuilder = new BooleanBuilder();
 
     if( orderedDate != null ) {
@@ -48,7 +49,12 @@ public class OrderServiceImpl implements OrderService {
     if( carId != null ) {
       booleanBuilder.and( qOrder.car.id.eq( carId ) );
     }
-
+    if( startDateTime != null ) {
+      booleanBuilder.and( qOrder.pickUpDate.eq( startDateTime ) );
+    }
+    if( dropDateTime != null ) {
+      booleanBuilder.and( qOrder.returnDate.eq( dropDateTime ) );
+    }
     PageRequest pageRequest = PageRequest.of( pageNumber, pageSize, Sort.by( sortDirection, sortBy ) );
     return orderRepository.findAll( booleanBuilder, pageRequest );
   }

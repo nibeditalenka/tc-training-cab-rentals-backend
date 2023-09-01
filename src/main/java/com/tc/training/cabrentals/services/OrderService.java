@@ -1,6 +1,7 @@
 package com.tc.training.cabrentals.services;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,7 +17,7 @@ public interface OrderService {
 
   Page<Order> getAllFiltered( final Integer pageNumber, final Integer pageSize, final String sortBy,
       final Sort.Direction sortDirection, final LocalDate orderedDate, final UUID centerId, final UUID userId,
-      final UUID carId );
+      final UUID carId, final LocalDateTime startDateTime, final LocalDateTime dropDateTime );
 
   Optional<Order> getById( UUID id );
 

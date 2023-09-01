@@ -1,12 +1,14 @@
 package com.tc.training.cabrentals.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,9 +44,11 @@ public class OrderController {
       @RequestParam( required = false, defaultValue = "orderedDate" ) String sortBy,
       @RequestParam( required = false, defaultValue = "DESC" ) Sort.Direction sortDirection,
       @RequestParam( required = false ) LocalDate orderedDate, @RequestParam( required = false ) UUID centerId,
-      @RequestParam( required = false ) UUID userId, @RequestParam( required = false ) UUID carId ) {
+      @RequestParam( required = false ) UUID userId, @RequestParam( required = false ) UUID carId,
+      @RequestParam( required = false ) @DateTimeFormat( iso = DateTimeFormat.ISO.DATE_TIME ) LocalDateTime startDateTime,
+      @RequestParam( required = false ) @DateTimeFormat( iso = DateTimeFormat.ISO.DATE_TIME ) LocalDateTime dropDateTime ) {
     return orderFacade.getAllFiltered( pageNumber, pageSize, sortBy, sortDirection, orderedDate, centerId, userId,
-        carId );
+        carId, startDateTime, dropDateTime );
   }
 
   @GetMapping( "/{id}" )

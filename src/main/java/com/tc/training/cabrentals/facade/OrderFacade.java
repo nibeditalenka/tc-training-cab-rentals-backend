@@ -1,6 +1,7 @@
 package com.tc.training.cabrentals.facade;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +17,7 @@ public interface OrderFacade {
 
   PageOutput<OrderOutput> getAllFiltered( final Integer pageNumber, final Integer pageSize, final String sortBy,
       final Sort.Direction sortDirection, final LocalDate orderedDate, final UUID centerId, final UUID userId,
-      final UUID carId );
+      final UUID carId, final LocalDateTime startDateTime, final LocalDateTime dropDateTime );
 
   OrderOutput updateOrder( UUID id, OrderInput input );
 
