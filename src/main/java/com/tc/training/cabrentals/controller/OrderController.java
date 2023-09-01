@@ -1,10 +1,12 @@
 package com.tc.training.cabrentals.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tc.training.cabrentals.dto.OrderInput;
 import com.tc.training.cabrentals.dto.OrderOutput;
+import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.enums.OrderStatus;
 import com.tc.training.cabrentals.facade.OrderFacade;
 
@@ -34,8 +37,12 @@ public class OrderController {
   }
 
   @GetMapping
-  public List<OrderOutput> getAll() {
-    return orderFacade.getAll();
+  public PageOutput<OrderOutput> getAll( @RequestParam( required = false, defaultValue = "0" ) Integer pageNumber,
+      @RequestParam( required = false, defaultValue = "25" ) Integer pageSize,
+      @RequestParam( required = false, defaultValue = "orderedDate" ) String sortBy,
+      @RequestParam( required = false, defaultValue = "DESC" ) Sort.Direction sortDirection,
+      @RequestParam( required = false ) LocalDate orderedDate ) {
+    return orderFacade.getAllFiltered( pageNumber, pageSize, sortBy, sortDirection );
   }
 
   @GetMapping( "/{id}" )

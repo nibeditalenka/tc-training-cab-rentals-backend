@@ -1,13 +1,17 @@
 package com.tc.training.cabrentals.facade.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.tc.training.cabrentals.dto.OrderInput;
 import com.tc.training.cabrentals.dto.OrderOutput;
+import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.entities.Car;
 import com.tc.training.cabrentals.entities.Order;
 import com.tc.training.cabrentals.enums.OrderStatus;
@@ -15,6 +19,7 @@ import com.tc.training.cabrentals.exception.ResourceNotFoundException;
 import com.tc.training.cabrentals.facade.OrderFacade;
 import com.tc.training.cabrentals.services.CarService;
 import com.tc.training.cabrentals.services.OrderService;
+import com.tc.training.cabrentals.utils.AppUtils;
 import com.tc.training.cabrentals.utils.CurrentUser;
 
 import lombok.RequiredArgsConstructor;
@@ -34,15 +39,17 @@ public class OrderFacadeImpl implements OrderFacade {
     Car car = carService.getCarById( input.getCarId() );
     order.setCar( car );
     order.setUser( CurrentUser.get() );
+    order.setOrderedDate( LocalDate.now() );
 
     order = orderService.createOrUpdate( order );
     return modelMapper.map( order, OrderOutput.class );
   }
 
   @Override
-  public List<OrderOutput> getAll() {
-    List<Order> orders = orderService.getAll();
-    return orders.stream().map( order -> modelMapper.map( order, OrderOutput.class ) ).toList();
+  public PageOutput<OrderOutput> getAllFiltered( final Integer pageNumber, final Integer pageSize, final String sortBy,
+      final Sort.Direction sortDirection ) {
+    Page<Order> orderPage = orderService.getAllFiltered( pageNumber, pageSize, sortBy, sortDirection );
+    return AppUtils.convertPageToPageOutput( orderPage, OrderOutput.class );
   }
 
   @Override

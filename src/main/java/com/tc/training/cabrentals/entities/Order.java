@@ -1,5 +1,6 @@
 package com.tc.training.cabrentals.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -21,13 +22,11 @@ public class Order extends BaseEntity {
   private Float price;
   private Float totalPrice;
   private Float gst;
-
   @ManyToOne
   private User user;
-
   @ManyToOne
   private Car car;
-
   @OneToOne
   private Payment payment;
+  private LocalDate orderedDate;
 }

@@ -22,10 +22,12 @@ import com.tc.training.cabrentals.dto.LoginInput;
 import com.tc.training.cabrentals.dto.PageOutput;
 import com.tc.training.cabrentals.dto.UserInput;
 import com.tc.training.cabrentals.dto.UserOutput;
+import com.tc.training.cabrentals.entities.Center;
 import com.tc.training.cabrentals.entities.User;
 import com.tc.training.cabrentals.enums.Role;
 import com.tc.training.cabrentals.exception.ResourceNotFoundException;
 import com.tc.training.cabrentals.facade.UserFacade;
+import com.tc.training.cabrentals.services.CenterService;
 import com.tc.training.cabrentals.services.FirebaseUserService;
 import com.tc.training.cabrentals.services.UserService;
 import com.tc.training.cabrentals.utils.AppUtils;
@@ -39,6 +41,8 @@ public class UserFacadeIml implements UserFacade {
   private final UserService userService;
   private final ModelMapper modelMapper;
   private final FirebaseUserService firebaseUserService;
+  private final CenterService centerService;
+
   @Value( "${firebase.api-key}" )
   private String firebaseApiKey;
   @Value( "${firebase.accounts-url}" )
@@ -46,10 +50,12 @@ public class UserFacadeIml implements UserFacade {
 
   @Override
   public UserOutput createEmployee( UserInput input ) {
+    Center center = centerService.getById( input.getCenterId() );
     User user = modelMapper.map( input, User.class );
     user.setRole( Role.EMPLOYEE );
     UserRecord firebaseUser = firebaseUserService.createUser( input );
     user.setFirebaseId( firebaseUser.getUid() );
+    user.setCenter( center );
     user = userService.createOrUpdate( user );
     return modelMapper.map( user, UserOutput.class );
   }

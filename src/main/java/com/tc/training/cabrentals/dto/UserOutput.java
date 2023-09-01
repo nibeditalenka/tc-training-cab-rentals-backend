@@ -14,5 +14,6 @@ public class UserOutput {
   private String name;
   private String email;
   private Role role;
+  private CenterOutput center;
   private String phoneNumber;
 }

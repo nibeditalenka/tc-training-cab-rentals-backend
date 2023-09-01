@@ -4,9 +4,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.querydsl.core.BooleanBuilder;
 import com.tc.training.cabrentals.entities.Order;
+import com.tc.training.cabrentals.entities.QOrder;
 import com.tc.training.cabrentals.enums.OrderStatus;
 import com.tc.training.cabrentals.repositories.OrderRepository;
 import com.tc.training.cabrentals.services.OrderService;
@@ -16,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
+  private final static QOrder qOrder = QOrder.order;
   private final OrderRepository orderRepository;
 
   @Override
@@ -24,8 +30,12 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public List<Order> getAll() {
-    return orderRepository.findAll();
+  public Page<Order> getAllFiltered( final Integer pageNumber, final Integer pageSize, final String sortBy,
+      final Sort.Direction sortDirection ) {
+    BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+    PageRequest pageRequest = PageRequest.of( pageNumber, pageSize, Sort.by( sortDirection, sortBy ) );
+    return orderRepository.findAll( booleanBuilder, pageRequest );
   }
 
   @Override

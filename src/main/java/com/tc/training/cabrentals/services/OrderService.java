@@ -4,13 +4,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+
 import com.tc.training.cabrentals.entities.Order;
 import com.tc.training.cabrentals.enums.OrderStatus;
 
 public interface OrderService {
   Order createOrUpdate( Order order );
 
-  List<Order> getAll();
+  Page<Order> getAllFiltered( final Integer pageNumber, final Integer pageSize, final String sortBy,
+      final Sort.Direction sortDirection );
 
   Optional<Order> getById( UUID id );
 
