@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.tc.training.cabrentals.enums.OrderStatus;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,4 +21,5 @@ public class OrderOutput {
   private Float totalPrice;
   private PaymentOutput payment;
   private LocalDate orderedDate;
+  private OrderStatus orderStatus;
 }
