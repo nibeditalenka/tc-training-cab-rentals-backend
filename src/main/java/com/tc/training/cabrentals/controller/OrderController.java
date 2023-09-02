@@ -58,7 +58,7 @@ public class OrderController {
     orderFacade.deleteOrder( id );
   }
 
-  @PatchMapping( "{id}" )
+  @PatchMapping( "/{id}" )
   public OrderOutput updateOrderStatus( @PathVariable UUID id, @RequestParam OrderStatus status ) {
     return orderFacade.updateStatus( id, status );
   }
