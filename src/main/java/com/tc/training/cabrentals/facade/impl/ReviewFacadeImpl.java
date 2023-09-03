@@ -41,7 +41,9 @@ public class ReviewFacadeImpl implements ReviewFacade {
     review.setOrder( order );
     review = reviewService.createOrUpdate( review );
     order.setReview( review );
-    orderService.createOrUpdate( order );
+    updateCarAverageRatings( order.getCar() );
+    order = orderService.createOrUpdate( order );
+    review = reviewService.createOrUpdate( review );
     return modelMapper.map( review, ReviewOutput.class );
   }
 
