@@ -3,6 +3,8 @@ package com.tc.training.cabrentals.entities;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -17,6 +19,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 public class Car extends BaseEntity {
+  @Enumerated( EnumType.STRING )
   private CarStatus carStatus;
   private String plateNumber;
   private String type;
@@ -30,7 +33,9 @@ public class Car extends BaseEntity {
   private Long numberOfRatings = 0L;
   private Long numberOfTrips = 0L;
   private String image;
+  @Enumerated( EnumType.STRING )
   private Gear gear;
+  @Enumerated( EnumType.STRING )
   private FuelType fuelType;
   @OneToMany
   //@JoinColumn( name = "order_id" ) // This assumes you have a column named "order_id" in the cars table
