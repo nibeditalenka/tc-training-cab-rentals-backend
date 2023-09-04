@@ -87,6 +87,7 @@ public class OrderFacadeImpl implements OrderFacade {
       Car car = order.getCar();
       car.setTripCount( car.getTripCount() + 1 );
       carService.createOrUpdate( car );
+      order.setReturnDate( LocalDateTime.now() );
     }
     order.setOrderStatus( orderStatus );
     return modelMapper.map( orderService.createOrUpdate( order ), OrderOutput.class );
