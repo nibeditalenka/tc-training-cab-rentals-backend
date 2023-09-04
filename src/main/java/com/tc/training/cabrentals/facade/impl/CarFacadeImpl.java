@@ -1,7 +1,6 @@
 package com.tc.training.cabrentals.facade.impl;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,8 +20,8 @@ import com.tc.training.cabrentals.entities.Order;
 import com.tc.training.cabrentals.enums.CarStatus;
 import com.tc.training.cabrentals.enums.FuelType;
 import com.tc.training.cabrentals.enums.Gear;
-import com.tc.training.cabrentals.enums.OrderStatus;
 import com.tc.training.cabrentals.facade.CarFacade;
+import com.tc.training.cabrentals.repositories.OrderRepository;
 import com.tc.training.cabrentals.services.CarService;
 import com.tc.training.cabrentals.services.CenterService;
 import com.tc.training.cabrentals.services.OrderService;
@@ -37,6 +36,7 @@ public class CarFacadeImpl implements CarFacade {
   private final CarService carService;
   private final CenterService centerService;
   private final OrderService orderService;
+  private final OrderRepository orderRepository;
 
   @Override
   public CarOutput addCar( CarInput carInput ) {
@@ -79,29 +79,29 @@ public class CarFacadeImpl implements CarFacade {
         dropDateTime );
     PageOutput<CarOutput> carOutputPageOutput = AppUtils.convertPageToPageOutput( carPage, CarOutput.class );
     if( startDateTime != null && dropDateTime != null ) {
-      List<CarOutput> content = carOutputPageOutput.getContent();
-      List<CarOutput> op = new ArrayList<>();
-      for( final CarOutput carOutput : content ) {
-        List<Order> byCarId = orderService.getByCarId( carOutput.getId(), List.of( OrderStatus.RETURNED ) );
-        boolean isConflict = false;
-        for( final Order order : byCarId ) {
-          isConflict = hasConflict( startDateTime, dropDateTime, order.getPickUpDate(), order.getReturnDate() );
-          if( isConflict )
-            break;
+      List<Order> orders = orderRepository.findAll();
+      for( int i = 0; i < orders.size(); i++ ) {
+        Order order = orders.get( i );
+        LocalDateTime ftime = order.getPickUpDate();
+        LocalDateTime ttime = order.getReturnDate();
+        boolean cond = true;
+        if( ftime.equals( startDateTime ) || ftime.equals( dropDateTime ) ) {
+          cond = false;
+        } else if( ttime.equals( startDateTime ) || ttime.equals( dropDateTime ) ) {
+          cond = false;
+        } else if( startDateTime.isAfter( ftime ) && dropDateTime.isBefore( ftime ) ) {
+          cond = false;
+        } else if( startDateTime.isAfter( ttime ) && dropDateTime.isBefore( ttime ) ) {
+          cond = false;
         }
-        if( !isConflict ) {
-          op.add( carOutput );
+
+        if( !cond ) {
+          carOutputPageOutput.getContent().removeIf( carOutput -> carOutput.getId().equals( order.getCar().getId() ) );
         }
       }
-      carOutputPageOutput.setContent( op );
     }
+
     return carOutputPageOutput;
-  }
-
-  public boolean hasConflict( LocalDateTime startDateTime1, LocalDateTime endDateTime1, LocalDateTime startDateTime2,
-      LocalDateTime endDateTime2 ) {
-
-    return startDateTime2.isAfter( endDateTime1 ) || endDateTime2.isBefore( startDateTime1 );
   }
 
   @Override
