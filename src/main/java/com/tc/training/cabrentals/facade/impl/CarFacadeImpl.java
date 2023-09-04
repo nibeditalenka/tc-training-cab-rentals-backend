@@ -101,9 +101,8 @@ public class CarFacadeImpl implements CarFacade {
 
   public boolean hasConflict( LocalDateTime startDateTime1, LocalDateTime endDateTime1, LocalDateTime startDateTime2,
       LocalDateTime endDateTime2 ) {
-    return ( startDateTime1.isAfter( startDateTime2 ) && startDateTime1.isBefore(
-        endDateTime2 ) ) || ( endDateTime1.isAfter( startDateTime2 ) && endDateTime1.isBefore(
-        endDateTime2 ) ) || ( startDateTime1.isBefore( startDateTime2 ) && endDateTime1.isAfter( endDateTime2 ) );
+    return ( !startDateTime1.isBefore( startDateTime2 ) || !endDateTime1.isBefore(
+        startDateTime2 ) ) && ( !startDateTime1.isAfter( endDateTime2 ) || !endDateTime1.isAfter( endDateTime2 ) );
   }
 
   @Override
