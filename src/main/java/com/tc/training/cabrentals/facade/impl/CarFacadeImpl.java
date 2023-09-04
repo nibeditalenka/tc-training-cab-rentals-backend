@@ -86,6 +86,9 @@ public class CarFacadeImpl implements CarFacade {
         boolean isConflict = false;
         for( final Order order : byCarId ) {
           isConflict = hasConflict( startDateTime, dropDateTime, order.getPickUpDate(), order.getReturnDate() );
+          if( isConflict ) {
+            break;
+          }
         }
         if( !isConflict ) {
           op.add( carOutput );
