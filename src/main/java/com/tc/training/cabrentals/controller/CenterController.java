@@ -43,7 +43,7 @@ class CenterController {
       @RequestParam( required = false, defaultValue = "name" ) String sortBy,
       @RequestParam( required = false, defaultValue = "ASC" ) Sort.Direction sortDirection,
       @RequestParam( required = false ) String name, @RequestParam( required = false ) String city,
-      @RequestParam( required = false ) Boolean isActive ) {
+      @RequestParam( required = false, defaultValue = "true" ) Boolean isActive ) {
     return centerFacade.getAll( pageNumber, pageSize, sortBy, sortDirection, name, city, isActive );
   }
 
